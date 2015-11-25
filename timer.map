@@ -1,0 +1,37 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Thu Oct 01 10:15:08 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x00002a
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000014      
+            21 out of 1094 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    delay   0x00000b    program     static C:\pic projects\onandoff\software\timer.asm
+                    start   0x000005    program     static C:\pic projects\onandoff\software\timer.asm
+                    three   0x000007    program     static C:\pic projects\onandoff\software\timer.asm
+                    times   0x00000e    program     static C:\pic projects\onandoff\software\timer.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000005    program     static C:\pic projects\onandoff\software\timer.asm
+                    three   0x000007    program     static C:\pic projects\onandoff\software\timer.asm
+                    delay   0x00000b    program     static C:\pic projects\onandoff\software\timer.asm
+                    times   0x00000e    program     static C:\pic projects\onandoff\software\timer.asm
+
+

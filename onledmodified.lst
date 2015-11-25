@@ -1,0 +1,65 @@
+MPASM  5.46                 ONLEDMODIFIED.ASM   9-9-2015  19:00:17         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001         
+0000   1683           00002         bsf 03h,5
+0001   3000           00003         movlw 00h
+0002   0086           00004         movwf 06h
+0003   1283           00005         bcf 03h,5
+0004                  00006 start
+                      00007 
+0004   30FF           00008         movlw 0ffh
+0005   0086           00009         movwf 06h
+0006   200B           00010         call delay
+0007   3000           00011         movlw 00h
+0008   0086           00012         movwf 06h
+0009   200B           00013         call delay
+                      00014         
+000A   2804           00015         goto start
+                      00016 
+000B                  00017 delay
+000B   3000           00018         movlw D'0'
+000C   00CA           00019         movwf 4ah
+000D   3002           00020         movlw D'2'
+000E   00CB           00021         movwf 4bh
+000F   3001           00022         movlw D'1'
+0010   00CC           00023         movwf 4ch
+0011                  00024 loop
+0011   0BCC           00025         decfsz 4ch,1
+0012   2811           00026         goto loop
+0013   0BCB           00027         decfsz 4bh,1
+0014   2811           00028         goto loop
+0015   0BCA           00029         decfsz 4ah,1
+0016   2811           00030         goto loop
+0017   0008           00031         return
+                      00032         end
+MPASM  5.46                 ONLEDMODIFIED.ASM   9-9-2015  19:00:17         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+delay                             0000000B
+loop                              00000011
+start                             00000004
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXX-------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    24
+Program Memory Words Free:  1000
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

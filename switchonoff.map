@@ -1,0 +1,35 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Wed Oct 07 19:12:40 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x00002e
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000016      
+            23 out of 1094 program addresses used, program memory utilization is 2%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    delay   0x00000d    program     static C:\pic projects\onandoff\software\switchonoff.asm
+                    frank   0x000010    program     static C:\pic projects\onandoff\software\switchonoff.asm
+                    start   0x000006    program     static C:\pic projects\onandoff\software\switchonoff.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000006    program     static C:\pic projects\onandoff\software\switchonoff.asm
+                    delay   0x00000d    program     static C:\pic projects\onandoff\software\switchonoff.asm
+                    frank   0x000010    program     static C:\pic projects\onandoff\software\switchonoff.asm
+
+

@@ -1,0 +1,45 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Wed Sep 09 13:13:51 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x00005e
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x00002e      
+            47 out of 1094 program addresses used, program memory utilization is 4%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    delay   0x000015    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                  iterate   0x00000c    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                   lookup   0x000026    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                    loop1   0x00001d    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                    loop2   0x00001d    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                    loop3   0x00001d    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                    start   0x000009    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                    times   0x000017    program     static C:\pic projects\onandoff\software\sevensegment.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000009    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                  iterate   0x00000c    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                    delay   0x000015    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                    times   0x000017    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                    loop1   0x00001d    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                    loop2   0x00001d    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                    loop3   0x00001d    program     static C:\pic projects\onandoff\software\sevensegment.asm
+                   lookup   0x000026    program     static C:\pic projects\onandoff\software\sevensegment.asm
+
+

@@ -1,0 +1,226 @@
+MPASM  5.46                 SHADOWCOUNTER.ASM   10-7-2015  19:45:36         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;asigns label to memories
+  00000006            00002 portb   equ     06h
+  00000002            00003 pcl             equ     02h
+  00000005            00004 porta   equ     05h
+  00000003            00005 status  equ     03h
+                      00006         cblock 0ch
+  0000000C            00007 pointer1;       equ     0dh
+  0000000D            00008 pointer2;       equ     0eh
+  0000000E            00009 temp;   equ     3bh
+  0000000F            00010 count2; equ     1dh
+  00000010            00011 count3; equ     1eh
+  00000011            00012 count1; equ     1fh
+  00000012            00013 firstseg;       equ     4ch
+  00000013            00014 secondseg;      equ     4dh
+  00000014            00015 check
+                      00016         endc
+                      00017 
+0000   1683           00018         bsf status,05h
+0001   3000           00019         movlw 00h
+0002   0086           00020         movwf portb ;sets input and output ports
+0003   3004           00021         movlw 04h
+0004   0085           00022         movwf porta
+0005   1283           00023         bcf 03h,5
+0006   3000           00024         movlw 00h
+0007   008E           00025         movwf temp
+0008   008C           00026         movwf pointer1
+0009   008D           00027         movwf pointer2
+000A   0094           00028         movwf check
+000B   30C0           00029         movlw 0c0h
+000C   0092           00030         movwf firstseg
+000D   0093           00031         movwf secondseg
+000E   30FF           00032         movlw 0ffh
+000F   0085           00033         movwf porta
+                      00034 
+0010                  00035 start:          ;program starts here
+0010   1D05           00036         btfss porta,2
+0011   2030           00037         call zero
+0012   1905           00038         btfsc porta,2
+0013   2032           00039         call one
+0014   2060           00040         call three
+0015   0813           00041         movf secondseg,0
+0016   3C88           00042         sublw 88h
+0017   1903           00043         btfsc status,2
+0018   2024           00044         call resetsecond
+0019   0812           00045         movf firstseg,0
+001A   3C88           00046         sublw 88h
+001B   1903           00047         btfsc status,2
+001C   201E           00048         call resetfirst
+001D   2810           00049         goto start
+                      00050 
+001E                  00051 resetfirst:
+001E   30C0           00052         movlw 0c0h
+001F   0092           00053         movwf firstseg
+MPASM  5.46                 SHADOWCOUNTER.ASM   10-7-2015  19:45:36         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0020   018D           00054         clrf pointer2
+0021   0A8D           00055         incf pointer2,1
+0022   1103           00056         bcf     status,2
+0023   0008           00057         return
+                      00058 
+0024                  00059 resetsecond:
+0024   018C           00060         clrf pointer1
+0025   0A8C           00061         incf pointer1,1
+0026   30C0           00062         movlw 0c0h
+0027   0093           00063         movwf secondseg
+0028   1C14           00064         btfss check,0
+0029   202C           00065         call partial
+002A   1103           00066         bcf status,2
+002B   0008           00067         return
+                      00068 
+002C                  00069 partial:
+002C   0A8D           00070         incf pointer2,1
+002D   2049           00071         call lookup2
+002E   0092           00072         movwf firstseg
+002F   0008           00073         return
+                      00074 
+0030                  00075 zero:
+0030   018E           00076         clrf temp
+0031   0008           00077         return
+                      00078 
+0032                  00079 one:
+0032   1C0E           00080         btfss temp,0
+0033   2035           00081         call address
+0034   0008           00082         return
+                      00083 
+0035                  00084 address:
+0035   203B           00085         call lookup1
+0036   0093           00086         movwf secondseg
+0037   30FF           00087         movlw 0ffh
+0038   008E           00088         movwf temp
+0039   0A8C           00089         incf pointer1,1
+003A   0008           00090         return
+                      00091 
+003B                  00092 lookup1:          ;the lookup table for the first segment
+003B   0194           00093         clrf check
+003C   080C           00094         movf pointer1,0
+003D   0782           00095         addwf pcl,1
+003E   34C0           00096         retlw 0c0h
+003F   34F9           00097         retlw 0f9h
+0040   34A4           00098         retlw 0a4h
+0041   34B0           00099         retlw 0b0h
+0042   3499           00100         retlw 99h
+0043   3492           00101         retlw 92h
+0044   3482           00102         retlw 82h
+0045   34F8           00103         retlw 0f8h
+0046   3480           00104         retlw 80h
+0047   3490           00105         retlw 90h
+0048   3488           00106         retlw 88h
+MPASM  5.46                 SHADOWCOUNTER.ASM   10-7-2015  19:45:36         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0049                  00107 lookup2:          ;the lookup table for the first segment
+0049   1414           00108         bsf check,0
+004A   080D           00109         movf pointer2,0
+004B   0782           00110         addwf pcl,1
+004C   34C0           00111         retlw 0c0h
+004D   34F9           00112         retlw 0f9h
+004E   34A4           00113         retlw 0a4h
+004F   34B0           00114         retlw 0b0h
+0050   3499           00115         retlw 99h
+0051   3492           00116         retlw 92h
+0052   3482           00117         retlw 82h
+0053   34F8           00118         retlw 0f8h
+0054   3480           00119         retlw 80h
+0055   3490           00120         retlw 90h
+0056   3488           00121         retlw 88h
+0057                  00122 delay:                  ;the time delay subroutine
+0057   3001           00123         movlw d'1'
+0058   0091           00124         movwf count1
+0059   3014           00125         movlw d'20'
+005A   008F           00126         movwf count2
+005B                  00127 times:
+005B   0B91           00128         decfsz count1,1
+005C   285B           00129         goto times
+005D   0B8F           00130         decfsz count2,1
+005E   285B           00131         goto times
+005F   0008           00132         return
+                      00133 
+                      00134 
+0060                  00135 three:
+0060   3004           00136         movlw d'4'
+0061   0090           00137         movwf count3
+0062                  00138 implement:                      ;the switching of the segments goes on here
+0062   0813           00139         movf secondseg,0
+0063   0086           00140         movwf portb
+0064   3002           00141         movlw 02h
+0065   0085           00142         movwf porta
+0066   2057           00143         call delay
+0067   3000           00144         movlw 00h
+0068   0085           00145         movwf porta
+0069   0812           00146         movf firstseg,0
+006A   0086           00147         movwf portb
+006B   3001           00148         movlw 01h
+006C   0085           00149         movwf porta
+006D   2057           00150         call delay
+006E   3000           00151         movlw 00h
+006F   0085           00152         movwf porta
+0070   0B90           00153         decfsz count3,1
+0071   2862           00154         goto implement
+0072   0008           00155         return
+                      00156         end
+MPASM  5.46                 SHADOWCOUNTER.ASM   10-7-2015  19:45:36         PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+__DEBUG                           1
+address                           00000035
+check                             00000014
+count1                            00000011
+count2                            0000000F
+count3                            00000010
+delay                             00000057
+firstseg                          00000012
+implement                         00000062
+lookup1                           0000003B
+lookup2                           00000049
+one                               00000032
+partial                           0000002C
+pcl                               00000002
+pointer1                          0000000C
+pointer2                          0000000D
+porta                             00000005
+portb                             00000006
+resetfirst                        0000001E
+resetsecond                       00000024
+secondseg                         00000013
+start                             00000010
+status                            00000003
+temp                              0000000E
+three                             00000060
+times                             0000005B
+zero                              00000030
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXX-------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   115
+Program Memory Words Free:   909
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

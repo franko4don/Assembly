@@ -1,0 +1,80 @@
+MPASM  5.46               TIMER0INTERRUPT.ASM   10-2-2015  5:51:01         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000006            00001 portb   equ     06h
+  00000005            00002 porta   equ     05h
+  00000081            00003 optionreg       equ     81h
+  00000002            00004 pcl     equ     02h
+  00000001            00005 tmr0    equ     01h
+  00000003            00006 status  equ 03h
+  0000000B            00007 interrupt       equ     0bh
+  0000000C            00008 counter equ     0ch
+0000   1683           00009         bsf status,5
+0001   3000           00010         movlw 00h
+0002   0086           00011         movwf portb
+0003   30D7           00012         movlw b'11010111'
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0004   0081           00013         movwf optionreg
+0005   1283           00014         bcf status,5
+0006   3000           00015         movlw 00h
+0007   008B           00016         movwf interrupt
+0008   168B           00017         bsf interrupt,5
+0009                  00018 start:
+0009   30FF           00019         movlw 0ffh
+000A   0086           00020         movwf portb
+000B   2010           00021         call delay
+000C   3000           00022         movlw 00h
+000D   0086           00023         movwf portb     
+000E   2010           00024         call delay
+000F   2809           00025         goto start
+0010                  00026 delay:
+0010   300F           00027         movlw d'15'
+0011   008C           00028         movwf counter
+0012                  00029 iterate:
+0012   1D0B           00030         btfss interrupt,2
+0013   2812           00031         goto iterate
+0014   110B           00032         bcf interrupt,2
+0015   0B8C           00033         decfsz counter,1
+0016   2812           00034         goto iterate
+0017   110B           00035         bcf interrupt,2
+0018   0008           00036         return
+                      00037         end
+MPASM  5.46               TIMER0INTERRUPT.ASM   10-2-2015  5:51:01         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+__DEBUG                           1
+counter                           0000000C
+delay                             00000010
+interrupt                         0000000B
+iterate                           00000012
+optionreg                         00000081
+pcl                               00000002
+porta                             00000005
+portb                             00000006
+start                             00000009
+status                            00000003
+tmr0                              00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXX------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    25
+Program Memory Words Free:   999
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     1 reported,     0 suppressed
+
+

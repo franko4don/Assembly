@@ -1,0 +1,167 @@
+MPASM  5.46          FLUIDLEVELCONTROLLER.ASM   11-9-2015  21:34:27         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;variable declaration
+  00000003            00002 status  equ 03h
+  00000005            00003 porta   equ     05h
+  00000006            00004 portb   equ     06h
+                      00005 
+                      00006         cblock 0ch
+  0000000C            00007 full
+  0000000D            00008 threequater
+  0000000E            00009 medium
+  0000000F            00010 exchange
+  00000010            00011 vlow
+  00000011            00012 zero
+                      00013         endc
+                      00014 
+0000   1683           00015         bsf status,5    ;moves to bank1
+0001   0186           00016         clrf portb              ;sets portb as output port
+0002   30FF           00017         movlw 0ffh              ;moves 0ffh into working register
+0003   0085           00018         movwf porta             ;sets porta as input port
+0004   1283           00019         bcf status,5    ;returns to bank0
+                      00020 
+                      00021 ;initialization of variables
+0005   300F           00022         movlw b'00001111'
+0006   008C           00023         movwf full
+0007   300E           00024         movlw b'00001110'
+0008   008D           00025         movwf threequater
+0009   300C           00026         movlw b'00001100'
+000A   008E           00027         movwf medium
+000B   3008           00028         movlw b'00001000'
+000C   0090           00029         movwf vlow
+000D   0186           00030         clrf portb
+000E   0191           00031         clrf zero
+                      00032 ;program starts
+000F                  00033 start:
+000F   1103           00034         bcf status,2    ;clears zero flag
+0010   0805           00035         movf porta,0    ;moves d state of porta into working register
+0011   060C           00036         xorwf full,0    ;xors the value of working reg with full
+0012   1903           00037         btfsc status,2  ;performs a bitcheck on the zero flag
+0013   2029           00038         call on1                ;calls the on1 subroutine
+                      00039 
+0014   1103           00040         bcf status,2    ;clears zero flag
+0015   0805           00041         movf porta,0    ;moves d state of porta into working register
+0016   060D           00042         xorwf threequater,0     ;xors the value of working reg with threequater
+0017   1903           00043         btfsc status,2  ;performs a bitcheck on the zero flag
+0018   202F           00044         call on2                ;calls the on2 subroutine
+                      00045 
+0019   1103           00046         bcf status,2    ;clears zero flag
+001A   0805           00047         movf porta,0    ;moves d state of porta into working register
+001B   060E           00048         xorwf medium,0  ;xors the value of working reg with medium
+001C   1903           00049         btfsc status,2  ;performs a bitcheck on the zero flag
+001D   2034           00050         call on3                ;calls the on3 subroutine
+                      00051 
+001E   1103           00052         bcf status,2    ;clears zero flag
+001F   0805           00053         movf porta,0    ;moves d state of porta into working register
+MPASM  5.46          FLUIDLEVELCONTROLLER.ASM   11-9-2015  21:34:27         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0020   0610           00054         xorwf vlow,0    ;xors the value of working reg with vlow
+0021   1903           00055         btfsc status,2  ;performs a bitcheck on the zero flag
+0022   2039           00056         call on4                ;calls the on4 subroutine
+                      00057 
+0023   1103           00058         bcf status,2    ;clears zero flag
+0024   0805           00059         movf porta,0    ;moves d state of porta into working register
+0025   0611           00060         xorwf zero,0    ;xors the value of working reg with zero
+0026   1903           00061         btfsc status,2  ;performs a bitcheck on the zero flag
+0027   203F           00062         call on5                ;calls the on5 subroutine
+                      00063 
+0028   280F           00064         goto start              ;jumps back to start label
+                      00065 
+0029                  00066 on1:
+                      00067         ;switches the necessary pins
+0029   1206           00068         bcf portb,4
+002A   1186           00069         bcf portb,3
+002B   1106           00070         bcf portb,2
+002C   1086           00071         bcf portb,1
+002D   1406           00072         bsf portb,0
+002E   0008           00073         return
+                      00074 
+002F                  00075 on2:
+                      00076     ;switches the necessary pins
+002F   1186           00077         bcf portb,3
+0030   1106           00078         bcf portb,2
+0031   1486           00079         bsf portb,1
+0032   1006           00080         bcf portb,0
+0033   0008           00081         return
+                      00082 
+0034                  00083 on3:
+                      00084         ;switches the necessary pins
+0034   1186           00085         bcf portb,3
+0035   1506           00086         bsf portb,2
+0036   1086           00087         bcf portb,1
+0037   1006           00088         bcf portb,0
+0038   0008           00089         return
+                      00090 
+0039                  00091 on4:
+                      00092         ;switches the necessary pins
+0039   1606           00093         bsf portb,4
+003A   1586           00094         bsf portb,3
+003B   1106           00095         bcf portb,2
+003C   1086           00096         bcf portb,1
+003D   1006           00097         bcf portb,0
+003E   0008           00098         return
+                      00099 
+003F                  00100 on5:
+                      00101         ;switches the necessary pins
+003F   1606           00102         bsf portb,4
+0040   1586           00103         bsf portb,3
+0041   1106           00104         bcf portb,2
+0042   1086           00105         bcf portb,1
+0043   1006           00106         bcf portb,0
+MPASM  5.46          FLUIDLEVELCONTROLLER.ASM   11-9-2015  21:34:27         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0044   0008           00107         return
+                      00108         end
+MPASM  5.46          FLUIDLEVELCONTROLLER.ASM   11-9-2015  21:34:27         PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+__DEBUG                           1
+exchange                          0000000F
+full                              0000000C
+medium                            0000000E
+on1                               00000029
+on2                               0000002F
+on3                               00000034
+on4                               00000039
+on5                               0000003F
+porta                             00000005
+portb                             00000006
+start                             0000000F
+status                            00000003
+threequater                       0000000D
+vlow                              00000010
+zero                              00000011
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXX----------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    69
+Program Memory Words Free:   955
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

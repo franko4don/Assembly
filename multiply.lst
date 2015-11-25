@@ -1,0 +1,97 @@
+MPASM  5.46                      MULTIPLY.ASM   11-24-2015  22:35:59         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000003            00001 status  equ     03h
+  00000020            00002 multiplier      equ     20h
+  00000021            00003 multiplied      equ     21h
+  00000024            00004 counter equ     24h
+  00000023            00005 temp    equ     23h
+  00000022            00006 loop    equ     22h
+  00000005            00007 porta   equ     05h
+  00000006            00008 portb   equ     06h
+  00000001            00009 optionreg       equ     01h
+0000   1683           00010         bsf status,5
+0001   0186           00011         clrf portb
+0002   0185           00012         clrf porta
+0003   3007           00013         movlw b'00000111'
+0004   0081           00014         movwf optionreg
+0005   1283           00015         bcf     status,5
+                      00016 
+0006                  00017 start:
+0006   3005           00018         movlw d'5'
+0007   00A1           00019         movwf multiplied
+0008   300B           00020         movlw d'11'
+0009   00A0           00021         movwf multiplier
+000A   200F           00022         call multiply
+000B   0821           00023         movf multiplied,0
+000C   0086           00024         movwf portb
+000D   2017           00025         call delay
+000E   2806           00026         goto start
+                      00027 
+                      00028 
+000F                  00029 multiply:
+000F   0821           00030         movf multiplied,0       ;moves content of multiplied register to working register
+0010   00A3           00031         movwf temp                      ;moves content of working register to temp register
+0011   03A0           00032         decf multiplier,1       ;decrements the multiplier
+0012                  00033 iterate:
+0012   0823           00034         movf temp,0                     ;moves content of temp register to working register
+0013   07A1           00035         addwf multiplied,1      ;adds content of working register to multiplied register and stores in m
+                            ultiplied register
+0014   0BA0           00036         decfsz multiplier,1     ;decrements the multiplier and skips next instruction if zero
+0015   2812           00037         goto iterate
+0016   0008           00038         return
+                      00039 
+0017                  00040 delay:
+0017   301E           00041     movlw d'30'
+0018   00A4           00042     movwf counter
+0019                  00043 frank:
+0019   1D0B           00044     btfss 0bh,2
+001A   2819           00045     goto frank
+001B   110B           00046     bcf 0bh,2
+001C   0BA4           00047     decfsz counter,1
+001D   2819           00048     goto frank
+001E   110B           00049     bcf 0bh,2
+001F   0008           00050     return
+                      00051         end
+MPASM  5.46                      MULTIPLY.ASM   11-24-2015  22:35:59         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+__DEBUG                           1
+counter                           00000024
+delay                             00000017
+frank                             00000019
+iterate                           00000012
+loop                              00000022
+multiplied                        00000021
+multiplier                        00000020
+multiply                          0000000F
+optionreg                         00000001
+porta                             00000005
+portb                             00000006
+start                             00000006
+status                            00000003
+temp                              00000023
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    32
+Program Memory Words Free:   992
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

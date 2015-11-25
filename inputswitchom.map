@@ -1,0 +1,37 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Thu Oct 08 10:52:02 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000044
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000021      
+            34 out of 1094 program addresses used, program memory utilization is 3%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    delay   0x000018    program     static C:\pic projects\onandoff\software\inputswitchom.asm
+                    frank   0x00001b    program     static C:\pic projects\onandoff\software\inputswitchom.asm
+                       on   0x000013    program     static C:\pic projects\onandoff\software\inputswitchom.asm
+                    start   0x000010    program     static C:\pic projects\onandoff\software\inputswitchom.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000010    program     static C:\pic projects\onandoff\software\inputswitchom.asm
+                       on   0x000013    program     static C:\pic projects\onandoff\software\inputswitchom.asm
+                    delay   0x000018    program     static C:\pic projects\onandoff\software\inputswitchom.asm
+                    frank   0x00001b    program     static C:\pic projects\onandoff\software\inputswitchom.asm
+
+

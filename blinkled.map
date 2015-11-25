@@ -1,0 +1,35 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Thu Oct 08 08:26:43 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x00002c
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000015      
+            22 out of 2182 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    delay   0x00000d    program     static C:\pic projects\onandoff\software\blinkled.asm
+                    frank   0x00000f    program     static C:\pic projects\onandoff\software\blinkled.asm
+                    start   0x000007    program     static C:\pic projects\onandoff\software\blinkled.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000007    program     static C:\pic projects\onandoff\software\blinkled.asm
+                    delay   0x00000d    program     static C:\pic projects\onandoff\software\blinkled.asm
+                    frank   0x00000f    program     static C:\pic projects\onandoff\software\blinkled.asm
+
+

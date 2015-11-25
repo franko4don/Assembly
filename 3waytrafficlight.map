@@ -1,0 +1,39 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Fri Oct 23 11:52:47 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000068
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000033      
+            52 out of 1094 program addresses used, program memory utilization is 4%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  charles   0x00002d    program     static C:\pic projects\onandoff\software\3waytrafficlight.asm
+                  delay10   0x000021    program     static C:\pic projects\onandoff\software\3waytrafficlight.asm
+                   delay5   0x00002b    program     static C:\pic projects\onandoff\software\3waytrafficlight.asm
+                    frank   0x000024    program     static C:\pic projects\onandoff\software\3waytrafficlight.asm
+                    start   0x00000b    program     static C:\pic projects\onandoff\software\3waytrafficlight.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x00000b    program     static C:\pic projects\onandoff\software\3waytrafficlight.asm
+                  delay10   0x000021    program     static C:\pic projects\onandoff\software\3waytrafficlight.asm
+                    frank   0x000024    program     static C:\pic projects\onandoff\software\3waytrafficlight.asm
+                   delay5   0x00002b    program     static C:\pic projects\onandoff\software\3waytrafficlight.asm
+                  charles   0x00002d    program     static C:\pic projects\onandoff\software\3waytrafficlight.asm
+
+

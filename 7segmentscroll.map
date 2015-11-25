@@ -1,0 +1,45 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Wed Sep 09 20:15:26 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000086
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000042      
+            67 out of 1094 program addresses used, program memory utilization is 6%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    delay   0x00001e    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                  execute   0x000036    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                 iterate1   0x00000a    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                 iterate2   0x000014    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                   lookup   0x00002b    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                     loop   0x000024    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                    start   0x000008    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                    times   0x000034    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000008    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                 iterate1   0x00000a    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                 iterate2   0x000014    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                    delay   0x00001e    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                     loop   0x000024    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                   lookup   0x00002b    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                    times   0x000034    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+                  execute   0x000036    program     static C:\pic projects\onandoff\software\7segmentscroll.asm
+
+

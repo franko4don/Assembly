@@ -1,0 +1,114 @@
+MPASM  5.46                  SEVENSEGMENT.ASM   9-9-2015  13:13:50         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;asigns label to memories
+  00000006            00002 portb   equ     06h
+  00000002            00003 pcl             equ     02h
+  00000005            00004 porta   equ     05h
+  00000003            00005 status  equ     03h
+  0000000D            00006 pointer equ     0dh
+Warning[203]: Found opcode in column 1. (bsf)
+0000   1683           00007 bsf status,5
+0001   3000           00008         movlw 00h
+0002   0086           00009         movwf portb
+0003   0085           00010         movwf porta
+0004   1283           00011         bcf 03h,5
+0005   3001           00012         movlw 01h
+0006   0085           00013         movwf porta
+0007   30FF           00014         movlw 0ffh      
+0008   0086           00015         movwf portb
+0009                  00016 start ;program starts here
+0009   3000           00017         movlw 00h
+000A   0086           00018         movwf portb
+000B   008D           00019         movwf pointer
+000C                  00020 iterate
+000C   080D           00021         movf pointer,0
+000D   2026           00022         call lookup
+000E   0086           00023         movwf portb
+000F   2015           00024         call delay
+0010   0A8D           00025         incf pointer,1
+0011   0A8D           00026         incf pointer,1 ;pointer to the value contained in the table is incremented
+0012   1D8D           00027         btfss pointer,3 ;checks if the 3rd bit is set so as to reset count
+0013   280C           00028         goto iterate
+0014   2809           00029         goto start
+0015                  00030 delay ;the delay routine
+0015   3001           00031         movlw 1 ;time delay of one second, if set to 2 becomes 2 second delay
+0016   00CD           00032         movwf 4dh
+0017                  00033 times
+0017   3010           00034         movlw 10
+0018   00CA           00035         movwf 4ah
+0019   3006           00036         movlw 6
+001A   00CB           00037         movwf 4bh
+001B   3002           00038         movlw 2
+001C   00CC           00039         movwf 4ch
+001D                  00040 loop1
+001D                  00041 loop2
+001D                  00042 loop3
+001D   0BCC           00043         decfsz 4ch,1
+001E   281D           00044         goto loop3
+001F   0BCB           00045         decfsz 4bh,1
+0020   281D           00046         goto loop2
+0021   0BCA           00047         decfsz 4ah,1
+0022   281D           00048         goto loop1
+0023   0BCD           00049         decfsz 4dh,1
+0024   2817           00050         goto times
+0025   0008           00051         return
+                      00052 
+MPASM  5.46                  SEVENSEGMENT.ASM   9-9-2015  13:13:50         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0026                  00053 lookup          ;the lookup table
+0026   0782           00054         addwf pcl,1
+0027   34C0           00055         retlw 0c0h
+0028   34F9           00056         retlw 0f9h
+0029   34A4           00057         retlw 0a4h
+002A   34B0           00058         retlw 0b0h
+002B   3499           00059         retlw 99h
+002C   3492           00060         retlw 92h
+002D   3482           00061         retlw 82h
+002E   34F8           00062         retlw 0f8h
+                      00063 
+                      00064         end
+MPASM  5.46                  SEVENSEGMENT.ASM   9-9-2015  13:13:50         PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+delay                             00000015
+iterate                           0000000C
+lookup                            00000026
+loop1                             0000001D
+loop2                             0000001D
+loop3                             0000001D
+pcl                               00000002
+pointer                           0000000D
+porta                             00000005
+portb                             00000006
+start                             00000009
+status                            00000003
+times                             00000017
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXX- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    47
+Program Memory Words Free:   977
+
+
+Errors   :     0
+Warnings :     1 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

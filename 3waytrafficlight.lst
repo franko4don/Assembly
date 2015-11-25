@@ -1,0 +1,125 @@
+MPASM  5.46              3WAYTRAFFICLIGHT.ASM   10-23-2015  11:52:46         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;label assignments to memories
+  00000002            00002 pcl     equ 02h
+  00000003            00003 status  equ     03h
+  00000005            00004 porta   equ     05h
+  00000006            00005 portb   equ     06h
+  0000000B            00006 interrupt       equ 0bh
+  00000001            00007 optionreg       equ 01h
+  00000001            00008 tmr0    equ     01h
+  0000001F            00009 CMCON   equ     1fh
+                      00010         cblock 0ch
+  0000000C            00011 counter ;counter for the timer0
+                      00012         endc
+                      00013 
+0000   1683           00014         bsf     status,5        ;switches to bank1
+0001   3000           00015         movlw 00h       
+0002   0086           00016         movwf portb             ;sets input and output for portb        
+0003   0085           00017         movwf porta             ;sets  input and output porta
+0004   30D7           00018         movlw b'11010111'
+0005   0081           00019         movwf optionreg ;sets  the optionreg register which includes prescaler
+0006   1283           00020         bcf status,5    ;switches to bank0
+0007   3000           00021         movlw 00h
+0008   008B           00022         movwf interrupt ;clears the interrupt register
+0009   168B           00023         bsf interrupt,5 ;sets the TMR0IE
+000A   1283           00024         bcf status,5
+                      00025 
+000B                  00026 start:
+000B   1405           00027         bsf porta,0
+000C   3084           00028         movlw b'10000100'
+000D   0086           00029         movwf portb
+000E   2021           00030         call delay10
+000F   1005           00031         bcf porta,0
+0010   3045           00032         movlw b'01000101'
+0011   0086           00033         movwf portb
+0012   202B           00034         call delay5
+0013   3026           00035         movlw b'00100110'
+0014   0086           00036         movwf portb
+0015   2021           00037         call delay10
+0016   3029           00038         movlw b'00101001'
+0017   0086           00039         movwf portb
+0018   202B           00040         call delay5
+0019   1405           00041         bsf porta,0
+001A   3030           00042         movlw b'00110000'
+001B   0086           00043         movwf portb
+001C   2021           00044         call delay10
+001D   3048           00045         movlw b'01001000'
+001E   0086           00046         movwf portb
+001F   202B           00047         call delay5
+0020   280B           00048         goto start
+                      00049 
+0021                  00050 delay10:
+0021   0181           00051         clrf tmr0
+0022   3098           00052     movlw d'152'
+0023   008C           00053     movwf counter
+MPASM  5.46              3WAYTRAFFICLIGHT.ASM   10-23-2015  11:52:46         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0024                  00054 frank:
+0024   1D0B           00055     btfss interrupt,2
+0025   2824           00056     goto frank
+0026   110B           00057     bcf interrupt,2
+0027   0B8C           00058     decfsz counter,1
+0028   2824           00059     goto frank
+0029   110B           00060     bcf interrupt,2
+002A   0008           00061     return
+                      00062 
+002B                  00063 delay5:
+002B   304C           00064     movlw d'76'
+002C   008C           00065     movwf counter
+002D                  00066 charles:
+002D   1D0B           00067     btfss interrupt,2
+002E   282D           00068     goto charles
+002F   110B           00069     bcf interrupt,2
+0030   0B8C           00070     decfsz counter,1
+0031   282D           00071     goto charles
+0032   110B           00072     bcf interrupt,2
+0033   0008           00073     return
+                      00074         end
+MPASM  5.46              3WAYTRAFFICLIGHT.ASM   10-23-2015  11:52:46         PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CMCON                             0000001F
+__16F84A                          00000001
+__DEBUG                           1
+charles                           0000002D
+counter                           0000000C
+delay10                           00000021
+delay5                            0000002B
+frank                             00000024
+interrupt                         0000000B
+optionreg                         00000001
+pcl                               00000002
+porta                             00000005
+portb                             00000006
+start                             0000000B
+status                            00000003
+tmr0                              00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXX------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    52
+Program Memory Words Free:   972
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

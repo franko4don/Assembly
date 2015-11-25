@@ -1,0 +1,39 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Tue Nov 24 22:36:01 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000040
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x00001f      
+            32 out of 1094 program addresses used, program memory utilization is 2%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    delay   0x000017    program     static C:\pic projects\onandoff\software\multiply.asm
+                    frank   0x000019    program     static C:\pic projects\onandoff\software\multiply.asm
+                  iterate   0x000012    program     static C:\pic projects\onandoff\software\multiply.asm
+                 multiply   0x00000f    program     static C:\pic projects\onandoff\software\multiply.asm
+                    start   0x000006    program     static C:\pic projects\onandoff\software\multiply.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000006    program     static C:\pic projects\onandoff\software\multiply.asm
+                 multiply   0x00000f    program     static C:\pic projects\onandoff\software\multiply.asm
+                  iterate   0x000012    program     static C:\pic projects\onandoff\software\multiply.asm
+                    delay   0x000017    program     static C:\pic projects\onandoff\software\multiply.asm
+                    frank   0x000019    program     static C:\pic projects\onandoff\software\multiply.asm
+
+

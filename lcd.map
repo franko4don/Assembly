@@ -1,0 +1,45 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Mon Nov 16 23:12:23 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000084
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000041      
+            66 out of 1094 program addresses used, program memory utilization is 6%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  cmd_wrt   0x00003b    program     static C:\pic projects\onandoff\software\lcd.asm
+                 data_wrt   0x000034    program     static C:\pic projects\onandoff\software\lcd.asm
+                    delay   0x000023    program     static C:\pic projects\onandoff\software\lcd.asm
+                    loop1   0x00002b    program     static C:\pic projects\onandoff\software\lcd.asm
+                    loop2   0x00002b    program     static C:\pic projects\onandoff\software\lcd.asm
+                    loop3   0x00002b    program     static C:\pic projects\onandoff\software\lcd.asm
+                    start   0x000012    program     static C:\pic projects\onandoff\software\lcd.asm
+                    times   0x000025    program     static C:\pic projects\onandoff\software\lcd.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000012    program     static C:\pic projects\onandoff\software\lcd.asm
+                    delay   0x000023    program     static C:\pic projects\onandoff\software\lcd.asm
+                    times   0x000025    program     static C:\pic projects\onandoff\software\lcd.asm
+                    loop1   0x00002b    program     static C:\pic projects\onandoff\software\lcd.asm
+                    loop2   0x00002b    program     static C:\pic projects\onandoff\software\lcd.asm
+                    loop3   0x00002b    program     static C:\pic projects\onandoff\software\lcd.asm
+                 data_wrt   0x000034    program     static C:\pic projects\onandoff\software\lcd.asm
+                  cmd_wrt   0x00003b    program     static C:\pic projects\onandoff\software\lcd.asm
+
+

@@ -1,0 +1,96 @@
+MPASM  5.46                         ONLED.ASM   9-4-2015  23:18:23         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001         
+0000   1683           00002         bsf 03h,5
+0001   3000           00003         movlw 00h
+0002   0086           00004         movwf 06h
+0003   1283           00005         bcf 03h,5
+0004                  00006 start
+0004   30FF           00007         movlw 0ffh
+0005   0086           00008         movwf 06h
+                      00009         
+0006   2017           00010         call onesec
+                      00011 
+0007   3000           00012         movlw 00h
+0008   0086           00013         movwf 06h
+                      00014 
+0009   2017           00015         call onesec
+                      00016 
+000A   2804           00017         goto start
+000B                  00018 delay
+                      00019 
+000B                  00020 first
+000B   30FF           00021         movlw 0ffh
+000C   00CE           00022         movwf 4eh
+                      00023 
+000D   00CA           00024         movwf 4ah
+                      00025 
+000E   00CB           00026         movwf 4bh
+                      00027         
+000F   00CC           00028         movwf 4ch
+0010   00CD           00029         movwf 4dh
+                      00030 
+0011                  00031 second  
+Warning[202]: Argument out of range.  Least significant bits used.
+0011   0BCE           00032         decfsz 4eh,second
+Warning[202]: Argument out of range.  Least significant bits used.
+0012   0BCA           00033         decfsz 4ah,second
+Warning[202]: Argument out of range.  Least significant bits used.
+0013   0BCB           00034         decfsz 4bh,second
+Warning[202]: Argument out of range.  Least significant bits used.
+0014   0BCC           00035         decfsz 4ch,second
+Warning[202]: Argument out of range.  Least significant bits used.
+0015   0BCD           00036         decfsz 4dh,second
+0016   0008           00037         return
+                      00038 
+0017                  00039 onesec
+0017   200B           00040         call delay
+0018   200B           00041         call delay
+0019   200B           00042         call delay
+001A   200B           00043         call delay
+001B   200B           00044         call delay
+001C   200B           00045         call delay
+001D   200B           00046         call delay
+001E   200B           00047         call delay
+001F   200B           00048         call delay
+MPASM  5.46                         ONLED.ASM   9-4-2015  23:18:23         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0020   0008           00049         return
+                      00050         end
+MPASM  5.46                         ONLED.ASM   9-4-2015  23:18:23         PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+delay                             0000000B
+first                             0000000B
+onesec                            00000017
+second                            00000011
+start                             00000004
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX X--------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    33
+Program Memory Words Free:   991
+
+
+Errors   :     0
+Warnings :     5 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

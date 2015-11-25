@@ -1,0 +1,55 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Wed Oct 07 19:45:37 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x0000e6
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000072      
+            115 out of 1094 program addresses used, program memory utilization is 10%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  address   0x000035    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                    delay   0x000057    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                implement   0x000062    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                  lookup1   0x00003b    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                  lookup2   0x000049    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                      one   0x000032    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                  partial   0x00002c    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+               resetfirst   0x00001e    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+              resetsecond   0x000024    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                    start   0x000010    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                    three   0x000060    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                    times   0x00005b    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                     zero   0x000030    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000010    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+               resetfirst   0x00001e    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+              resetsecond   0x000024    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                  partial   0x00002c    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                     zero   0x000030    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                      one   0x000032    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                  address   0x000035    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                  lookup1   0x00003b    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                  lookup2   0x000049    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                    delay   0x000057    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                    times   0x00005b    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                    three   0x000060    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+                implement   0x000062    program     static C:\pic projects\onandoff\software\shadowcounter.asm
+
+

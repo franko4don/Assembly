@@ -1,0 +1,142 @@
+MPASM  5.46                7SEGMENTSCROLL.ASM   9-9-2015  20:15:25         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;asigns label to memories
+  00000006            00002 portb   equ     06h
+  00000002            00003 pcl             equ     02h
+  00000005            00004 porta   equ     05h
+  00000003            00005 status  equ     03h
+  0000000D            00006 pointer1        equ     0dh
+  0000000E            00007 pointer2        equ     0eh
+  0000001A            00008 temp1   equ     1ah
+  0000001B            00009 temp2   equ 1bh
+0000   1683           00010         bsf status,5
+0001   3000           00011         movlw 00h
+0002   0086           00012         movwf portb ;sets input and output ports
+0003   0085           00013         movwf porta
+0004   1283           00014         bcf 03h,5
+0005   3000           00015         movlw 00h
+0006   0085           00016         movwf porta     
+0007   0086           00017         movwf portb     
+0008                  00018 start
+0008   200A           00019         call iterate1
+0009   2808           00020         goto start
+000A                  00021 iterate1
+000A   080D           00022         movf pointer1,0
+000B   202B           00023         call lookup
+000C   009A           00024         movwf temp1     
+000D   0A8D           00025         incf pointer1,1 ;pointer to the value contained in the table is incremented
+000E   3000           00026         movlw 00h
+000F   008E           00027         movwf pointer2
+0010   2014           00028         call iterate2
+0011   1D8D           00029         btfss pointer1,3 ;checks if the 3rd bit is set so as to reset count
+0012   280A           00030         goto iterate1
+0013   0008           00031         return
+0014                  00032 iterate2
+0014   080E           00033         movf pointer2,0
+0015   202B           00034         call lookup
+0016   009B           00035         movwf temp2
+0017   2034           00036         call times
+0018   0A8E           00037         incf pointer2,1 ;pointer to the value contained in the table is incremented
+0019   1D8E           00038         btfss pointer2,3 ;checks if the 3rd bit is set so as to reset count
+001A   2814           00039         goto iterate2
+001B   3000           00040         movlw 00h
+001C   0082           00041         movwf pcl
+001D   0008           00042         return
+                      00043 
+001E                  00044 delay
+001E   3002           00045         movlw D'2'
+001F   00CA           00046         movwf 4ah
+0020   3002           00047         movlw D'2'
+0021   00CB           00048         movwf 4bh
+0022   3001           00049         movlw D'1'
+0023   00CC           00050         movwf 4ch
+0024                  00051 loop
+0024   0BCC           00052         decfsz 4ch,1
+0025   2824           00053         goto loop
+MPASM  5.46                7SEGMENTSCROLL.ASM   9-9-2015  20:15:25         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0026   0BCB           00054         decfsz 4bh,1
+0027   2824           00055         goto loop
+0028   0BCA           00056         decfsz 4ah,1
+0029   2824           00057         goto loop
+002A   0008           00058         return
+                      00059         
+                      00060 
+002B                  00061 lookup          ;the lookup table
+002B   0782           00062         addwf pcl,1
+002C   34C0           00063         retlw 0c0h
+002D   34F9           00064         retlw 0f9h
+002E   34A4           00065         retlw 0a4h
+002F   34B0           00066         retlw 0b0h
+0030   3499           00067         retlw 99h
+0031   3492           00068         retlw 92h
+0032   3482           00069         retlw 82h
+0033   34F8           00070         retlw 0f8h
+                      00071 
+0034                  00072 times
+0034   3006           00073         movlw D'6'
+0035   009C           00074         movwf 1ch
+0036                  00075 execute
+0036   3001           00076         movlw 01h
+0037   0085           00077         movwf porta
+0038   081A           00078         movf temp1,0
+0039   0086           00079         movwf portb
+003A   201E           00080         call delay
+003B   3002           00081         movlw 02h
+003C   0085           00082         movwf porta
+003D   081B           00083         movf temp2,0
+003E   0086           00084         movwf portb
+003F   201E           00085         call delay
+0040   0B9C           00086         decfsz 1ch,1
+0041   2836           00087         goto execute
+0042   0008           00088         return
+                      00089         end
+MPASM  5.46                7SEGMENTSCROLL.ASM   9-9-2015  20:15:25         PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+delay                             0000001E
+execute                           00000036
+iterate1                          0000000A
+iterate2                          00000014
+lookup                            0000002B
+loop                              00000024
+pcl                               00000002
+pointer1                          0000000D
+pointer2                          0000000E
+porta                             00000005
+portb                             00000006
+start                             00000008
+status                            00000003
+temp1                             0000001A
+temp2                             0000001B
+times                             00000034
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXX------------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    67
+Program Memory Words Free:   957
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

@@ -1,0 +1,96 @@
+MPASM  5.46            EXTERNAL INTERRUPT.ASM   11-10-2015  22:29:53         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000006            00001 portb   equ     06h
+  00000005            00002 porta   equ     05h
+  00000001            00003 optionreg       equ     01h
+  00000002            00004 pcl     equ     02h
+  00000001            00005 tmr0    equ     01h
+  00000003            00006 status  equ 03h
+  0000000B            00007 interrupt       equ     0bh
+  0000000C            00008 counter equ     0ch
+  0000000D            00009 service equ     0dh
+0000   1683           00010         bsf status,5
+0001   3001           00011         movlw b'00000001'
+0002   0086           00012         movwf portb
+0003   30D7           00013         movlw b'11010111'
+0004   0081           00014         movwf optionreg
+0005   3000           00015         movlw 00h
+0006   0085           00016         movwf porta
+0007   1283           00017         bcf status,5
+0008   008B           00018         movwf interrupt
+0009   168B           00019         bsf interrupt,5
+000A   160B           00020         bsf interrupt,4
+000B                  00021 start:
+000B   30FF           00022         movlw 0ffh
+000C   0085           00023         movwf porta
+000D   2013           00024         call delay
+000E   188B           00025         btfsc interrupt,1
+000F   201C           00026         call ISR
+0010   0185           00027         clrf porta
+0011   2013           00028         call delay
+0012   280B           00029         goto start
+0013                  00030 delay:
+0013   300F           00031         movlw d'15'
+0014   008C           00032         movwf counter
+0015                  00033 iterate:
+0015   1D0B           00034         btfss interrupt,2
+0016   2815           00035         goto iterate
+0017   110B           00036         bcf interrupt,2
+0018   0B8C           00037         decfsz counter,1
+0019   2815           00038         goto iterate
+001A   110B           00039         bcf interrupt,2
+001B   0008           00040         return
+                      00041 
+001C                  00042 ISR:
+001C   3005           00043         movlw d'5'
+001D   008D           00044         movwf service
+001E   108B           00045         bcf     interrupt,1
+001F                  00046 loop:
+001F   2013           00047         call delay
+0020   0B8D           00048         decfsz service,1
+0021   281F           00049         goto loop
+0022   0008           00050         return
+                      00051         end
+MPASM  5.46            EXTERNAL INTERRUPT.ASM   11-10-2015  22:29:53         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ISR                               0000001C
+__16F84A                          00000001
+__DEBUG                           1
+counter                           0000000C
+delay                             00000013
+interrupt                         0000000B
+iterate                           00000015
+loop                              0000001F
+optionreg                         00000001
+pcl                               00000002
+porta                             00000005
+portb                             00000006
+service                           0000000D
+start                             0000000B
+status                            00000003
+tmr0                              00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXX------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    35
+Program Memory Words Free:   989
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

@@ -1,0 +1,45 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Sun Sep 13 20:24:58 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x0000a0
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x00004f      
+            80 out of 1094 program addresses used, program memory utilization is 7%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    delay   0x000034    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                implement   0x00003f    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                 iterate1   0x000010    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                 iterate2   0x00001d    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                   lookup   0x000029    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                    start   0x00000b    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                    three   0x00003d    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                    times   0x000038    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x00000b    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                 iterate1   0x000010    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                 iterate2   0x00001d    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                   lookup   0x000029    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                    delay   0x000034    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                    times   0x000038    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                    three   0x00003d    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+                implement   0x00003f    program     static C:\pic projects\onandoff\software\7segcorrect.asm
+
+

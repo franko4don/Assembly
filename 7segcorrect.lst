@@ -1,0 +1,170 @@
+MPASM  5.46                   7SEGCORRECT.ASM   9-13-2015  20:24:57         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;asigns label to memories
+  00000006            00002 portb   equ     06h
+  00000002            00003 pcl             equ     02h
+  00000005            00004 porta   equ     05h
+  00000003            00005 status  equ     03h
+  0000000D            00006 pointer1        equ     0dh
+  0000000E            00007 pointer2        equ     0eh
+  0000003B            00008 temp1   equ     3bh
+  0000004B            00009 temp2   equ 4bh
+  0000001C            00010 count1  equ     1ch
+  0000001D            00011 count2  equ     1dh
+  0000001E            00012 count3  equ     1eh
+                      00013 
+0000   1683           00014         bsf status,5
+0001   3000           00015         movlw 00h
+0002   0086           00016         movwf portb ;sets input and output ports
+0003   0085           00017         movwf porta
+0004   1283           00018         bcf 03h,5
+0005   0086           00019         movwf portb     
+0006   3000           00020         movlw 00h
+0007   008D           00021         movwf pointer1
+0008   008E           00022         movwf pointer2
+0009   30C0           00023         movlw 0c0h
+000A   00CB           00024         movwf temp2
+000B                  00025 start
+000B   2010           00026         call iterate1
+000C   3000           00027         movlw 00h
+000D   008D           00028         movwf pointer1
+000E   008E           00029         movwf pointer2
+000F   280B           00030         goto start
+                      00031 
+0010                  00032 iterate1
+0010   1103           00033         bcf status,2
+0011   3000           00034         movlw 00h
+0012   008D           00035         movwf pointer1
+0013   080E           00036         movf pointer2,0
+0014   2029           00037         call lookup
+0015   00BB           00038         movwf temp1
+0016   201D           00039         call iterate2
+0017   0A8E           00040         incf pointer2,1 ;pointer to the value contained in the table is incremented
+0018   083B           00041         movf temp1,0;
+0019   3C90           00042         sublw 90h
+001A   1D03           00043         btfss status,2 ;checks if count is up to 9
+001B   2810           00044         goto iterate1
+001C   0008           00045         return
+                      00046 
+001D                  00047 iterate2
+001D   1103           00048         bcf status,2
+001E   080D           00049         movf pointer1,0
+001F   2029           00050         call lookup
+0020   00CB           00051         movwf temp2
+0021   3C90           00052         sublw 90h
+0022   203D           00053         call three
+MPASM  5.46                   7SEGCORRECT.ASM   9-13-2015  20:24:57         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0023   0A8D           00054         incf pointer1,1 ;pointer to the value contained in the table is incremented     
+0024   084B           00055         movf temp2,0;
+0025   3C90           00056         sublw 90h
+0026   1D03           00057         btfss status,2 ;checks if count is up to 9
+0027   281D           00058         goto iterate2
+0028   0008           00059         return
+                      00060 
+0029                  00061 lookup          ;the lookup table
+0029   0782           00062         addwf pcl,1
+002A   34C0           00063         retlw 0c0h
+002B   34F9           00064         retlw 0f9h
+002C   34A4           00065         retlw 0a4h
+002D   34B0           00066         retlw 0b0h
+002E   3499           00067         retlw 99h
+002F   3492           00068         retlw 92h
+0030   3482           00069         retlw 82h
+0031   34F8           00070         retlw 0f8h
+0032   3480           00071         retlw 80h
+0033   3490           00072         retlw 90h
+                      00073 
+0034                  00074 delay                   ;the time delay subroutine
+0034   3004           00075         movlw d'4'
+0035   009C           00076         movwf count1
+0036   301E           00077         movlw d'30'
+0037   009D           00078         movwf count2
+0038                  00079 times
+0038   0B9C           00080         decfsz count1,1
+0039   2838           00081         goto times
+003A   0B9D           00082         decfsz count2,1
+003B   2838           00083         goto times
+003C   0008           00084         return
+                      00085 
+003D                  00086 three
+003D   301E           00087         movlw d'30'
+003E   009E           00088         movwf count3
+003F                  00089 implement                       ;the switching of the segments goes on here
+003F   083B           00090         movf temp1,0
+0040   0086           00091         movwf portb
+0041   3001           00092         movlw 01h
+0042   0085           00093         movwf porta
+0043   2034           00094         call delay
+0044   3000           00095         movlw 00h
+0045   0085           00096         movwf porta
+0046   084B           00097         movf temp2,0
+0047   0086           00098         movwf portb
+0048   3002           00099         movlw 02h
+0049   0085           00100         movwf porta
+004A   2034           00101         call delay
+004B   3000           00102         movlw 00h
+004C   0085           00103         movwf porta
+004D   0B9E           00104         decfsz count3,1
+004E   283F           00105         goto implement
+004F   0008           00106         return
+MPASM  5.46                   7SEGCORRECT.ASM   9-13-2015  20:24:57         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107         end
+MPASM  5.46                   7SEGCORRECT.ASM   9-13-2015  20:24:57         PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+__DEBUG                           1
+count1                            0000001C
+count2                            0000001D
+count3                            0000001E
+delay                             00000034
+implement                         0000003F
+iterate1                          00000010
+iterate2                          0000001D
+lookup                            00000029
+pcl                               00000002
+pointer1                          0000000D
+pointer2                          0000000E
+porta                             00000005
+portb                             00000006
+start                             0000000B
+status                            00000003
+temp1                             0000003B
+temp2                             0000004B
+three                             0000003D
+times                             00000038
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    80
+Program Memory Words Free:   944
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

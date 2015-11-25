@@ -1,0 +1,111 @@
+MPASM  5.46                           ADC.ASM   11-4-2015  14:26:05         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000005            00001 porta equ 05h
+  00000006            00002 portb equ 06h
+  00000008            00003 portd   equ     08h
+  00000005            00004 trisa   equ     05h
+  00000006            00005 trisb   equ     06h
+  00000008            00006 trisd   equ     08h
+  00000003            00007 status  equ 03h
+  0000001F            00008 adcon0  equ     1fh
+  0000001F            00009 adcon1  equ     1fh
+  0000001E            00010 adresl  equ     1eh
+  0000001E            00011 adresh  equ     1eh
+  00000020            00012 counter equ 20h
+  00000021            00013 value   equ 21h
+  00000001            00014 optionreg       equ 01h
+  0000000B            00015 intcon  equ 0bh
+  0000000C            00016 adif    equ     0ch
+  0000001C            00017 cmcon   equ     1ch
+0000   1683           00018         bsf status,5
+0001   30FF           00019         movlw b'11111111'
+0002   0085           00020         movwf trisa
+0003   0186           00021         clrf trisb
+0004   30D0           00022         movlw b'11010000'
+0005   0081           00023         movwf optionreg ;sets  the optionreg register which includes prescaler
+0006   3000           00024         movlw b'00000000'
+0007   009F           00025         movwf adcon1
+0008   019E           00026         clrf adresl
+0009   170C           00027         bsf adif,6
+000A   1283           00028         bcf status,5
+                      00029 
+                      00030 
+000B   3081           00031         movlw b'10000001'
+000C   009F           00032         movwf adcon0
+                      00033 ;       bcf adif,6
+000D   3007           00034         movlw 07h
+000E   009C           00035         movwf cmcon
+                      00036 
+000F                  00037 start:
+000F   0000           00038         nop
+0010   0000           00039         nop
+0011   0000           00040         nop
+0012   0000           00041         nop
+0013   0000           00042         nop
+0014   151F           00043         bsf adcon0,2
+0015   1D1F           00044         btfss adcon0,2
+0016   2815           00045         goto $-1
+                      00046 
+0017   081E           00047         movf adresl,0
+0018   0086           00048         movwf portb
+0019   1683           00049         bsf status,5
+001A   081E           00050         movf adresl,0
+001B   00A1           00051         movwf value
+001C   1283           00052         bcf status,5
+001D   0821           00053         movf value,0
+MPASM  5.46                           ADC.ASM   11-4-2015  14:26:05         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+001E   0088           00054         movwf portd
+                      00055 
+                      00056         end
+MPASM  5.46                           ADC.ASM   11-4-2015  14:26:05         PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F877A                         00000001
+__DEBUG                           1
+adcon0                            0000001F
+adcon1                            0000001F
+adif                              0000000C
+adresh                            0000001E
+adresl                            0000001E
+cmcon                             0000001C
+counter                           00000020
+intcon                            0000000B
+optionreg                         00000001
+porta                             00000005
+portb                             00000006
+portd                             00000008
+start                             0000000F
+status                            00000003
+trisa                             00000005
+trisb                             00000006
+trisd                             00000008
+value                             00000021
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXX- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    31
+Program Memory Words Free:  8161
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

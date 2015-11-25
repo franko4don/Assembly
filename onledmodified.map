@@ -1,0 +1,35 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Wed Sep 09 19:00:18 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000030
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000017      
+            24 out of 1094 program addresses used, program memory utilization is 2%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    delay   0x00000b    program     static C:\pic projects\onandoff\software\onledmodified.asm
+                     loop   0x000011    program     static C:\pic projects\onandoff\software\onledmodified.asm
+                    start   0x000004    program     static C:\pic projects\onandoff\software\onledmodified.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000004    program     static C:\pic projects\onandoff\software\onledmodified.asm
+                    delay   0x00000b    program     static C:\pic projects\onandoff\software\onledmodified.asm
+                     loop   0x000011    program     static C:\pic projects\onandoff\software\onledmodified.asm
+
+

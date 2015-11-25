@@ -1,0 +1,139 @@
+MPASM  5.46                           LCD.ASM   11-16-2015  23:12:22         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;asigns label to memories
+  00000006            00002 portb   equ     06h
+  00000002            00003 pcl             equ     02h
+  00000005            00004 porta   equ     05h
+  00000003            00005 status  equ     03h
+  0000000D            00006 pointer equ     0dh
+                      00007 
+Warning[203]: Found opcode in column 1. (bsf)
+0000   1683           00008 bsf status,5
+0001   3000           00009         movlw 00h
+0002   0086           00010         movwf portb ;sets input and output ports
+0003   0085           00011         movwf porta
+0004   1283           00012         bcf 03h,5
+0005   3000           00013         movlw 00h
+0006   0085           00014         movwf porta             
+0007   0086           00015         movwf portb
+                      00016         
+                      00017         ;initializes the lcd
+0008   3038           00018         movlw 38h ;sets the matrix to 5 by 7
+0009   203B           00019         call cmd_wrt
+000A   3080           00020         movlw 80h  ;shifts the cursor to position 0
+000B   203B           00021         call cmd_wrt
+000C   3014           00022         movlw 14h
+000D   203B           00023         call cmd_wrt    
+000E   300E           00024         movlw 0eh
+000F   203B           00025         call cmd_wrt
+0010   300C           00026         movlw 0ch ;hides the cursor
+0011   203B           00027         call cmd_wrt
+                      00028 
+0012                  00029 start
+0012   305F           00030         movlw d'95'
+0013   2034           00031         call data_wrt
+0014   3045           00032         movlw 'E'
+0015   2034           00033         call data_wrt
+0016   304C           00034         movlw 'L'
+0017   2034           00035         call data_wrt
+0018   3043           00036         movlw 'C'
+0019   2034           00037         call data_wrt
+001A   304F           00038         movlw 'O'
+001B   2034           00039         call data_wrt
+001C   304D           00040         movlw 'M'
+001D   2034           00041         call data_wrt
+001E   3045           00042         movlw 'E'
+001F   2034           00043         call data_wrt
+0020   3001           00044         movlw 01h
+0021   203B           00045         call cmd_wrt
+0022   2812           00046         goto start
+                      00047 ;delay sub routine
+0023                  00048 delay
+0023   3001           00049         movlw 1
+0024   00CD           00050         movwf 4dh
+0025                  00051 times
+0025   3002           00052         movlw 2
+MPASM  5.46                           LCD.ASM   11-16-2015  23:12:22         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0026   00CA           00053         movwf 4ah
+0027   3000           00054         movlw 0
+0028   00CB           00055         movwf 4bh
+0029   3000           00056         movlw 0
+002A   00CC           00057         movwf 4ch
+002B                  00058 loop1
+002B                  00059 loop2
+002B                  00060 loop3
+002B   0BCC           00061         decfsz 4ch,1
+002C   282B           00062         goto loop3
+002D   0BCB           00063         decfsz 4bh,1
+002E   282B           00064         goto loop2
+002F   0BCA           00065         decfsz 4ah,1
+0030   282B           00066         goto loop1
+0031   0BCD           00067         decfsz 4dh,1
+0032   2825           00068         goto times
+0033   0008           00069         return
+                      00070 
+0034                  00071 data_wrt
+0034   0086           00072         movwf portb
+0035   3005           00073         movlw 05h
+0036   0085           00074         movwf porta
+0037   2023           00075         call delay
+0038   3004           00076         movlw 04h
+0039   0085           00077         movwf porta
+003A   0008           00078         return
+                      00079 
+003B                  00080 cmd_wrt
+003B   0086           00081         movwf portb
+003C   3001           00082         movlw 01h
+003D   0085           00083         movwf porta
+003E   2023           00084         call delay
+003F   3000           00085         movlw 00h
+0040   0085           00086         movwf porta
+0041   0008           00087         return
+                      00088         end
+MPASM  5.46                           LCD.ASM   11-16-2015  23:12:22         PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+cmd_wrt                           0000003B
+data_wrt                          00000034
+delay                             00000023
+loop1                             0000002B
+loop2                             0000002B
+loop3                             0000002B
+pcl                               00000002
+pointer                           0000000D
+porta                             00000005
+portb                             00000006
+start                             00000012
+status                            00000003
+times                             00000025
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XX-------------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    66
+Program Memory Words Free:   958
+
+
+Errors   :     0
+Warnings :     1 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

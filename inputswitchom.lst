@@ -1,0 +1,94 @@
+MPASM  5.46                 INPUTSWITCHOM.ASM   10-8-2015  10:52:01         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000001            00001 optionreg       equ 01h
+  00000020            00002 counter equ     20h
+  00000003            00003 status  equ     03h
+  00000006            00004 portb   equ     06h
+  00000005            00005 porta   equ 05h
+  00000001            00006 tmr0    equ     01h
+  0000000B            00007 interrupt equ   0bh
+  0000001F            00008 CMCON   equ     1fh
+0000   3007           00009         movlw 0x07 ;Turn comparators off and
+0001   009F           00010         movwf CMCON
+0002   1683           00011         bsf     status,5        ;switches to bank1
+0003   3000           00012         movlw 00h       
+0004   0086           00013         movwf portb             ;sets input and output for portb
+0005   30FF           00014         movlw 0ffh              
+0006   0085           00015         movwf porta             ;sets  input and output porta
+0007   30D7           00016         movlw b'11010111'
+0008   0081           00017         movwf optionreg ;sets  the optionreg register which includes prescaler
+0009   1283           00018         bcf status,5    ;switches to bank0
+000A   3000           00019         movlw 00h
+000B   008B           00020         movwf interrupt ;clears the interrupt register
+000C   168B           00021         bsf interrupt,5 ;sets the TMR0IE
+000D   1283           00022         bcf status,5
+000E   3000           00023         movlw 00h       
+000F   0086           00024         movwf portb
+                      00025 
+0010                  00026 start:
+0010   1905           00027         btfsc porta,2
+0011   2013           00028         call on
+0012   2810           00029         goto start
+                      00030 
+0013                  00031 on:
+0013   30FF           00032         movlw 0ffh
+0014   0086           00033         movwf   portb
+0015   2018           00034         call delay
+0016   0186           00035         clrf portb
+0017   0008           00036         return
+                      00037 
+0018                  00038 delay:
+0018   0181           00039         clrf tmr0
+0019   301E           00040         movlw d'30'
+001A   00A0           00041     movwf counter       ;moves value in working register to counter
+001B                  00042 frank:
+001B   1D0B           00043     btfss 0bh,2         ;checks the TMR0IF to know when its set
+001C   281B           00044     goto frank
+001D   110B           00045     bcf interrupt,2     ;clears the TMR0IF
+001E   0BA0           00046     decfsz counter,1    ;decrements the value in the counter and puts the decremented value in the count
+                            er
+001F   281B           00047     goto frank
+0020   110B           00048     bcf interrupt,2             ;clears the TMR0IF
+0021   0008           00049     return
+                      00050         end
+MPASM  5.46                 INPUTSWITCHOM.ASM   10-8-2015  10:52:01         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CMCON                             0000001F
+__16F84A                          00000001
+__DEBUG                           1
+counter                           00000020
+delay                             00000018
+frank                             0000001B
+interrupt                         0000000B
+on                                00000013
+optionreg                         00000001
+porta                             00000005
+portb                             00000006
+start                             00000010
+status                            00000003
+tmr0                              00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XX-------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    34
+Program Memory Words Free:   990
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

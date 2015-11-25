@@ -1,0 +1,76 @@
+MPASM  5.46                         TIMER.ASM   10-1-2015  10:15:04         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;assignment of labels
+  00000005            00002 porta   equ 05h
+  00000006            00003 portb   equ     06h
+  00000003            00004 status  equ 03h
+  0000000D            00005 count1  equ     0dh
+  0000000E            00006 count2  equ     0eh
+  0000000F            00007 count3  equ 0fh
+0000   1683           00008         bsf     status,5
+0001   3000           00009         movlw 00h       
+0002   0086           00010         movwf portb
+0003   0085           00011         movwf porta
+0004   1283           00012         bcf status,5
+                      00013         
+0005                  00014 start
+0005   2007           00015         call three
+0006   2805           00016         goto start
+0007                  00017 three
+0007   3002           00018         movlw D'2'
+0008   008E           00019         movwf count2
+0009   3005           00020         movlw D'5'
+000A   008F           00021         movwf count3
+000B                  00022 delay
+000B   0000           00023         nop
+000C   30A5           00024         movlw D'165'
+000D   008D           00025         movwf count1
+000E                  00026 times
+000E   0B8D           00027         decfsz count1,1
+000F   280E           00028         goto times
+0010   0B8E           00029         decfsz count2,1
+0011   280B           00030         goto delay
+0012   0B8F           00031         decfsz count3,1
+0013   280B           00032         goto delay
+0014   0008           00033         return
+                      00034         
+                      00035         end
+MPASM  5.46                         TIMER.ASM   10-1-2015  10:15:04         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F84A                          00000001
+__DEBUG                           1
+count1                            0000000D
+count2                            0000000E
+count3                            0000000F
+delay                             0000000B
+porta                             00000005
+portb                             00000006
+start                             00000005
+status                            00000003
+three                             00000007
+times                             0000000E
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXX----------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    21
+Program Memory Words Free:  1003
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

@@ -1,0 +1,567 @@
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;assignment of variables to memory
+  00000006            00002 portb   equ 06h
+  00000005            00003 porta   equ     05h
+  00000001            00004 optionreg       equ     01h
+  00000003            00005 status  equ     03h
+  0000000B            00006 interrupt       equ     0bh
+                      00007 ;temp   equ     0dh
+  00000001            00008 tmr0    equ     01h
+  0000001F            00009 CMCON   equ     1fh
+                      00010         cblock 20h
+  00000020            00011 receiver
+  00000021            00012 work    
+  00000022            00013 decode  
+  00000023            00014 counter
+  00000024            00015 checker
+  00000025            00016 pin0
+  00000026            00017 pin1
+  00000027            00018 pin2
+  00000028            00019 pin3
+  00000029            00020 pin4
+  0000002A            00021 temp
+  0000002B            00022 onstate
+  0000002C            00023 receivedbyte
+  0000002D            00024 startbyte
+  0000002E            00025 checkbyte
+  0000002F            00026 bitcheck
+                      00027         endc
+                      00028 
+0000   3007           00029         movlw 0x07
+0001   009F           00030         movwf CMCON             ;sets porta to digital I/O
+0002   1683           00031         bsf status,5    ;I/O port setup in bank1
+0003   3000           00032         movlw 00h
+0004   0086           00033         movwf portb             ;input and ouput pin setup on portb
+0005   3001           00034         movlw b'00000001'
+0006   0085           00035         movwf porta             ;initialiazation of portb with zeros
+0007   30D2           00036         movlw b'11010010'
+0008   0081           00037         movwf optionreg ;opreg setup for prescaler,TOCS and TOSE
+0009   1283           00038         bcf status,5    ;switches back to bank0
+000A   3000           00039         movlw 00h
+000B   008B           00040         movwf interrupt
+000C   168B           00041         bsf interrupt,5 ;TMR0IE
+000D   3000           00042         movlw 00h
+000E   0086           00043         movwf portb     ;portb initialization
+000F   3000           00044         movlw b'00000000'
+0010   00A5           00045         movwf pin0
+0011   3001           00046         movlw b'00000001'
+0012   00A6           00047         movwf pin1
+0013   3002           00048         movlw b'00000010'
+0014   00A7           00049         movwf pin2
+0015   3003           00050         movlw b'00000011'
+0016   00A8           00051         movwf pin3
+0017   30AA           00052         movlw b'10101010'
+0018   00AE           00053         movwf checkbyte
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 
+0019                  00055 start:
+0019   3000           00056         movlw 00h       
+001A   00A0           00057         movwf receiver  ;initializes receiver register with zeros
+001B   00A2           00058         movwf decode    ;initializes decode register with zeros
+001C   00AC           00059         movwf receivedbyte
+001D   00A4           00060         movwf checker
+001E   1805           00061         btfsc porta,0
+001F   2021           00062         call preamble
+0020   2819           00063         goto start              ;goes back to start
+                      00064 
+0021                  00065 preamble:
+0021   2111           00066         call delay1
+0022   1C05           00067         btfss porta,0
+0023   20F3           00068         call zeroth1
+0024   1805           00069         btfsc porta,0
+0025   20F8           00070         call oneth1
+0026   2107           00071         call delay
+                      00072 
+0027   1C05           00073         btfss porta,0
+0028   20F3           00074         call zeroth1
+0029   1805           00075         btfsc porta,0
+002A   20F8           00076         call oneth1
+002B   2107           00077         call delay
+                      00078 
+002C   1C05           00079         btfss porta,0
+002D   20F3           00080         call zeroth1
+002E   1805           00081         btfsc porta,0
+002F   20F8           00082         call oneth1
+0030   2107           00083         call delay
+                      00084 
+0031   1C05           00085         btfss porta,0
+0032   20F3           00086         call zeroth1
+0033   1805           00087         btfsc porta,0
+0034   20F8           00088         call oneth1
+0035   2107           00089         call delay
+                      00090 
+0036   1C05           00091         btfss porta,0
+0037   20F3           00092         call zeroth1
+0038   1805           00093         btfsc porta,0
+0039   20F8           00094         call oneth1
+003A   2107           00095         call delay
+                      00096 
+003B   1C05           00097         btfss porta,0
+003C   20F3           00098         call zeroth1
+003D   1805           00099         btfsc porta,0
+003E   20F8           00100         call oneth1
+003F   2107           00101         call delay
+                      00102 
+0040   1C05           00103         btfss porta,0
+0041   20F3           00104         call zeroth1
+0042   1805           00105         btfsc porta,0
+0043   20F8           00106         call oneth1
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0044   2107           00107         call delay
+                      00108 
+0045   1C05           00109         btfss porta,0
+0046   20F3           00110         call zeroth1
+0047   1805           00111         btfsc porta,0
+0048   20F8           00112         call oneth1
+0049   2107           00113         call delay
+004A   0DAD           00114         rlf startbyte,1
+004B   0DAD           00115         rlf startbyte,1
+004C   2111           00116         call delay1
+                      00117 
+004D   1103           00118         bcf status,2
+004E   30AA           00119         movlw b'10101010'
+Message[305]: Using default destination of 1 (file).
+004F   06AD           00120         xorwf startbyte
+0050   1903           00121         btfsc status,2
+0051   2053           00122         call reception
+0052   0008           00123         return
+0053                  00124 reception:      ;triggers the receiver
+0053   208D           00125         call operation  ;calls the subroutine that accepts the bits
+0054   1103           00126         bcf status,2
+0055   082C           00127         movf receivedbyte,0
+0056   062E           00128         xorwf checkbyte,0
+0057   1903           00129         btfsc status,2
+0058   2125           00130         call decrypt    ;decoded the received signal
+0059   1103           00131         bcf status,2
+005A   082C           00132         movf receivedbyte,0
+005B   062E           00133         xorwf checkbyte,0
+005C   1903           00134         btfsc status,2 
+005D   205F           00135         call switch
+005E   0008           00136         return
+                      00137 
+005F                  00138 switch:         ;this subroutine checks it the decoded signal matches the supposed values in memory
+005F   1103           00139         bcf status,2
+0060   0822           00140         movf decode,0   ;moves the value of decoded signal to the working register
+0061   0628           00141         xorwf pin3,0    ;xors the value of the working register with pin3 and stores answer in working r
+                            egister
+0062   1903           00142         btfsc status,2  ;checks if the signal matches the content of pin3 by checking the state of the z
+                            ero flag
+0063   2087           00143         call onandoff3
+0064   1103           00144         bcf status,2
+0065   0822           00145         movf decode,0   ;moves the value of decoded signal to the working register
+0066   0627           00146         xorwf pin2,0    ;xors the value of the working register with pin2 and stores answer in working r
+                            egister
+0067   1903           00147         btfsc status,2  ;checks if the signal matches the content of pin2 by checking the state of the z
+                            ero flag
+0068   2081           00148         call onandoff2
+0069   1103           00149         bcf status,2
+006A   0822           00150         movf decode,0   ;moves the value of decoded signal to the working register
+006B   0626           00151         xorwf pin1,0    ;xors the value of the working register with pin1 and stores answer in working r
+                            egister
+006C   1903           00152         btfsc status,2  ;checks if the signal matches the content of pin1 by checking the state of the z
+                            ero flag
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+006D   207B           00153         call onandoff1
+006E   1103           00154         bcf status,2
+006F   0822           00155         movf decode,0   ;moves the value of decoded signal to the working register
+0070   0625           00156         xorwf pin0,0    ;xors the value of the working register with pin0 and stores answer in working r
+                            egister
+0071   1903           00157         btfsc status,2  ;checks if the signal matches the content of pin0 by checking the state of the z
+                            ero flag
+0072   2075           00158         call onandoff0
+0073   1103           00159         bcf status,2
+0074   0008           00160         return
+                      00161 
+0075                  00162 onandoff0:
+0075   1406           00163         bsf portb,0
+0076   3001           00164         movlw b'00000001'
+0077   06AB           00165         xorwf onstate,1
+0078   082B           00166         movf onstate,0
+0079   0086           00167         movwf portb
+007A   0008           00168         return
+                      00169 
+007B                  00170 onandoff1:
+007B   1486           00171         bsf portb,1
+007C   3002           00172         movlw b'00000010'
+007D   06AB           00173         xorwf onstate,1
+007E   082B           00174         movf onstate,0
+007F   0086           00175         movwf portb
+0080   0008           00176         return
+                      00177 
+0081                  00178 onandoff2:
+0081   1506           00179         bsf portb,2
+0082   3004           00180         movlw b'00000100'
+0083   06AB           00181         xorwf onstate,1
+0084   082B           00182         movf onstate,0
+0085   0086           00183         movwf portb
+0086   0008           00184         return
+                      00185 
+0087                  00186 onandoff3:
+0087   1586           00187         bsf portb,3
+0088   3008           00188         movlw b'00001000'
+0089   06AB           00189         xorwf onstate,1
+008A   082B           00190         movf onstate,0
+008B   0086           00191         movwf portb
+008C   0008           00192         return
+                      00193 
+                      00194 
+008D                  00195 operation:                      ;actual reception goes on here. This subroutine checks the status of pin
+                            o every 160ms to ascertain 
+                      00196 ;the status of the pin then calls up the appropriate subroutine
+008D   1405           00197         bsf porta,0
+008E   2111           00198         call delay1
+                      00199 
+008F   1C05           00200         btfss porta,0
+0090   20FD           00201         call zero
+0091   1805           00202         btfsc porta,0
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0092   2102           00203         call one
+0093   2107           00204         call delay
+                      00205 
+0094   1C05           00206         btfss porta,0
+0095   20FD           00207         call zero
+0096   1805           00208         btfsc porta,0
+0097   2102           00209         call one
+0098   2107           00210         call delay
+                      00211 
+0099   1C05           00212         btfss porta,0
+009A   20FD           00213         call zero
+009B   1805           00214         btfsc porta,0
+009C   2102           00215         call one
+009D   2107           00216         call delay
+                      00217 
+009E   1C05           00218         btfss porta,0
+009F   20FD           00219         call zero
+00A0   1805           00220         btfsc porta,0
+00A1   2102           00221         call one
+00A2   2107           00222         call delay
+                      00223 
+00A3   1C05           00224         btfss porta,0
+00A4   20FD           00225         call zero
+00A5   1805           00226         btfsc porta,0
+00A6   2102           00227         call one
+00A7   2107           00228         call delay
+                      00229 
+00A8   1C05           00230         btfss porta,0
+00A9   20FD           00231         call zero
+00AA   1805           00232         btfsc porta,0
+00AB   2102           00233         call one
+00AC   2107           00234         call delay
+                      00235 
+00AD   1C05           00236         btfss porta,0
+00AE   20FD           00237         call zero
+00AF   1805           00238         btfsc porta,0
+00B0   2102           00239         call one
+00B1   2107           00240         call delay
+                      00241 
+00B2   1C05           00242         btfss porta,0
+00B3   20FD           00243         call zero
+00B4   1805           00244         btfsc porta,0
+00B5   2102           00245         call one
+00B6   2107           00246         call delay
+00B7   1005           00247         bcf porta,0
+00B8   2107           00248         call delay
+00B9   0DA0           00249         rlf receiver,1  ;rotates the receiver register left through carry once
+00BA   20BC           00250         call bytecheck
+00BB   0008           00251         return
+                      00252 
+00BC                  00253 bytecheck:
+00BC   2111           00254         call delay1
+00BD   1C05           00255         btfss porta,0
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00BE   20E9           00256         call zeroth
+00BF   1805           00257         btfsc porta,0
+00C0   20EE           00258         call oneth
+00C1   2107           00259         call delay
+                      00260 
+00C2   1C05           00261         btfss porta,0
+00C3   20E9           00262         call zeroth
+00C4   1805           00263         btfsc porta,0
+00C5   20EE           00264         call oneth
+00C6   2107           00265         call delay
+                      00266 
+00C7   1C05           00267         btfss porta,0
+00C8   20E9           00268         call zeroth
+00C9   1805           00269         btfsc porta,0
+00CA   20EE           00270         call oneth
+00CB   2107           00271         call delay
+                      00272 
+00CC   1C05           00273         btfss porta,0
+00CD   20E9           00274         call zeroth
+00CE   1805           00275         btfsc porta,0
+00CF   20EE           00276         call oneth
+00D0   2107           00277         call delay
+                      00278 
+00D1   1C05           00279         btfss porta,0
+00D2   20E9           00280         call zeroth
+00D3   1805           00281         btfsc porta,0
+00D4   20EE           00282         call oneth
+00D5   2107           00283         call delay
+                      00284 
+00D6   1C05           00285         btfss porta,0
+00D7   20E9           00286         call zeroth
+00D8   1805           00287         btfsc porta,0
+00D9   20EE           00288         call oneth
+00DA   2107           00289         call delay
+                      00290 
+00DB   1C05           00291         btfss porta,0
+00DC   20E9           00292         call zeroth
+00DD   1805           00293         btfsc porta,0
+00DE   20EE           00294         call oneth
+00DF   2107           00295         call delay
+                      00296 
+00E0   1C05           00297         btfss porta,0
+00E1   20E9           00298         call zeroth
+00E2   1805           00299         btfsc porta,0
+00E3   20EE           00300         call oneth
+00E4   2107           00301         call delay
+00E5   0DAC           00302         rlf receivedbyte,1
+00E6   0DAC           00303         rlf receivedbyte,1
+00E7   2111           00304         call delay1
+00E8   0008           00305         return
+                      00306 
+00E9                  00307 zeroth:
+00E9   1085           00308         bcf porta,1
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00EA   3000           00309         movlw b'00000000'       
+00EB   06AC           00310         xorwf receivedbyte,1    ;xors the value in the working register with that in the receiver
+00EC   0CAC           00311         rrf receivedbyte,1              ;rotates the content of receiver right through carry
+00ED   0008           00312         return
+                      00313 
+00EE                  00314 oneth:
+00EE   1485           00315         bsf porta,1
+00EF   3080           00316         movlw b'10000000'
+00F0   06AC           00317         xorwf receivedbyte,1    ;xors the value in the working register with that in the receiver
+00F1   0CAC           00318         rrf receivedbyte,1              ;rotates the content of receiver right through carry
+00F2   0008           00319         return
+                      00320 
+00F3                  00321 zeroth1:
+00F3   1085           00322         bcf porta,1
+00F4   3000           00323         movlw b'00000000'       
+00F5   06AD           00324         xorwf startbyte,1       ;xors the value in the working register with that in the receiver
+00F6   0CAD           00325         rrf startbyte,1         ;rotates the content of receiver right through carry
+00F7   0008           00326         return
+                      00327 
+00F8                  00328 oneth1:
+00F8   1485           00329         bsf porta,1
+00F9   3080           00330         movlw b'10000000'
+00FA   06AD           00331         xorwf startbyte,1       ;xors the value in the working register with that in the receiver
+00FB   0CAD           00332         rrf startbyte,1         ;rotates the content of receiver right through carry
+00FC   0008           00333         return
+                      00334 
+00FD                  00335 zero:
+00FD   1085           00336         bcf porta,1
+00FE   3000           00337         movlw b'00000000'       
+00FF   06A0           00338         xorwf receiver,1        ;xors the value in the working register with that in the receiver
+0100   0CA0           00339         rrf receiver,1          ;rotates the content of receiver right through carry
+0101   0008           00340         return
+                      00341 
+0102                  00342 one:
+0102   1485           00343         bsf porta,1
+0103   3080           00344         movlw b'10000000'
+0104   06A0           00345         xorwf receiver,1        ;xors the value in the working register with that in the receiver
+0105   0CA0           00346         rrf receiver,1          ;rotates the content of receiver right through carry
+0106   0008           00347         return
+                      00348 
+                      00349 
+0107                  00350 delay:          ;time delay using interrupt and time zero
+0107   0181           00351         clrf tmr0
+0108   3008           00352         movlw d'8'
+0109   00A3           00353     movwf counter
+010A                  00354 frank:
+010A   1D0B           00355     btfss interrupt,2
+010B   290A           00356     goto frank
+010C   110B           00357     bcf interrupt,2
+010D   0BA3           00358     decfsz counter,1
+010E   290A           00359     goto frank
+010F   110B           00360     bcf interrupt,2
+0110   0008           00361     return
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00362 
+0111                  00363 delay1:         ;time delay usinf interrupt and time zero
+0111   0181           00364         clrf tmr0
+0112   302F           00365         movlw d'47'
+0113   00A3           00366     movwf counter
+0114                  00367 frank1:
+0114   1D0B           00368     btfss interrupt,2
+0115   2914           00369     goto frank1
+0116   110B           00370     bcf interrupt,2
+0117   0BA3           00371     decfsz counter,1
+0118   2914           00372     goto frank1
+0119   110B           00373     bcf interrupt,2
+011A   0008           00374     return
+                      00375 
+011B                  00376 delay3:         ;time delay usinf interrupt and time zero
+011B   0181           00377         clrf tmr0
+011C   30E3           00378         movlw d'227'
+011D   00A3           00379     movwf counter
+011E                  00380 frank2:
+011E   1D0B           00381     btfss interrupt,2
+011F   291E           00382     goto frank2
+0120   110B           00383     bcf interrupt,2
+0121   0BA3           00384     decfsz counter,1
+0122   291E           00385     goto frank2
+0123   110B           00386     bcf interrupt,2
+0124   0008           00387     return
+                      00388 
+0125                  00389 decrypt:                        ;decoding of the received signal goes on here
+0125   0820           00390         movf receiver,0
+0126   00A1           00391         movwf work
+0127   1BA1           00392         btfsc work,7
+0128   2139           00393         call decryptone
+0129   1FA1           00394         btfss work,7
+012A   213D           00395         call decryptzero
+012B   1AA1           00396         btfsc work,5
+012C   2139           00397         call decryptone
+012D   1EA1           00398         btfss work,5
+012E   213D           00399         call decryptzero
+012F   19A1           00400         btfsc work,3
+0130   2139           00401         call decryptone
+0131   1DA1           00402         btfss work,3
+0132   213D           00403         call decryptzero
+0133   18A1           00404         btfsc work,1
+0134   2139           00405         call decryptone
+0135   1CA1           00406         btfss work,1
+0136   213D           00407         call decryptzero
+0137   0CA2           00408         rrf decode,1    ;rotates the bits right once to correct the effect from the decryption
+0138   0008           00409         return
+                      00410 
+0139                  00411 decryptone:
+0139   3001           00412         movlw b'00000001'
+013A   06A2           00413         xorwf decode,1
+013B   0DA2           00414         rlf decode,1
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+013C   0008           00415         return
+                      00416 
+013D                  00417 decryptzero:
+013D   3000           00418         movlw b'00000000'
+013E   06A2           00419         xorwf decode,1
+013F   0DA2           00420         rlf decode,1
+0140   0008           00421         return
+                      00422 
+                      00423         end
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CMCON                             0000001F
+__16F84A                          00000001
+__DEBUG                           1
+bitcheck                          0000002F
+bytecheck                         000000BC
+checkbyte                         0000002E
+checker                           00000024
+counter                           00000023
+decode                            00000022
+decrypt                           00000125
+decryptone                        00000139
+decryptzero                       0000013D
+delay                             00000107
+delay1                            00000111
+delay3                            0000011B
+frank                             0000010A
+frank1                            00000114
+frank2                            0000011E
+interrupt                         0000000B
+onandoff0                         00000075
+onandoff1                         0000007B
+onandoff2                         00000081
+onandoff3                         00000087
+one                               00000102
+oneth                             000000EE
+oneth1                            000000F8
+onstate                           0000002B
+operation                         0000008D
+optionreg                         00000001
+pin0                              00000025
+pin1                              00000026
+pin2                              00000027
+pin3                              00000028
+pin4                              00000029
+porta                             00000005
+portb                             00000006
+preamble                          00000021
+receivedbyte                      0000002C
+receiver                          00000020
+reception                         00000053
+start                             00000019
+startbyte                         0000002D
+status                            00000003
+switch                            0000005F
+temp                              0000002A
+tmr0                              00000001
+work                              00000021
+zero                              000000FD
+zeroth                            000000E9
+zeroth1                           000000F3
+MPASM  5.46                      RECEIVER.ASM   11-6-2015  16:12:45         PAGE 11
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : X--------------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   321
+Program Memory Words Free:   703
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     1 reported,     0 suppressed
+
+

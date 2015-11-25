@@ -1,0 +1,39 @@
+MPLINK 4.43, Linker
+Linker Map File - Created Tue Nov 10 22:29:56 2015
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000046
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000022      
+            35 out of 1094 program addresses used, program memory utilization is 3%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                      ISR   0x00001c    program     static C:\pic projects\onandoff\software\external interrupt.asm
+                    delay   0x000013    program     static C:\pic projects\onandoff\software\external interrupt.asm
+                  iterate   0x000015    program     static C:\pic projects\onandoff\software\external interrupt.asm
+                     loop   0x00001f    program     static C:\pic projects\onandoff\software\external interrupt.asm
+                    start   0x00000b    program     static C:\pic projects\onandoff\software\external interrupt.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x00000b    program     static C:\pic projects\onandoff\software\external interrupt.asm
+                    delay   0x000013    program     static C:\pic projects\onandoff\software\external interrupt.asm
+                  iterate   0x000015    program     static C:\pic projects\onandoff\software\external interrupt.asm
+                      ISR   0x00001c    program     static C:\pic projects\onandoff\software\external interrupt.asm
+                     loop   0x00001f    program     static C:\pic projects\onandoff\software\external interrupt.asm
+
+
