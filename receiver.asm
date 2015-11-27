@@ -24,6 +24,7 @@ receivedbyte
 startbyte
 checkbyte
 bitcheck
+controldelay
 	endc
 
 	movlw 0x07
@@ -31,8 +32,8 @@ bitcheck
 	bsf status,5	;I/O port setup in bank1
 	movlw 00h
 	movwf portb		;input and ouput pin setup on portb
-	movlw b'00000001'
-	movwf porta		;initialiazation of portb with zeros
+	movlw b'00000101'
+	movwf porta		
 	movlw b'11010010'
 	movwf optionreg	;opreg setup for prescaler,TOCS and TOSE
 	bcf status,5	;switches back to bank0
@@ -52,13 +53,21 @@ bitcheck
 	movlw b'10101010'
 	movwf checkbyte
 
+prestart:
+	movlw d'10'
+	movwf controldelay
+times:
+	call delay3
+	decfsz controldelay,1
+	goto times
+
 start:
 	movlw 00h	
 	movwf receiver	;initializes receiver register with zeros
 	movwf decode	;initializes decode register with zeros
 	movwf receivedbyte
 	movwf checker
-	btfsc porta,0
+	btfss porta,0
 	call preamble
 	goto start		;goes back to start
 
@@ -121,6 +130,7 @@ preamble:
 	btfsc status,2
 	call reception
 	return
+
 reception:	;triggers the receiver
 	call operation	;calls the subroutine that accepts the bits
 	bcf status,2
@@ -133,6 +143,8 @@ reception:	;triggers the receiver
 	xorwf checkbyte,0
 	btfsc status,2 
 	call switch
+	
+
 	return
 
 switch:		;this subroutine checks it the decoded signal matches the supposed values in memory
@@ -383,6 +395,20 @@ frank2:
     bcf interrupt,2
     decfsz counter,1
     goto frank2
+    bcf interrupt,2
+    return
+
+
+delay2sec:
+	clrf tmr0
+	movlw d'156'
+    movwf counter
+frank3:
+    btfss interrupt,2
+    goto frank3
+    bcf interrupt,2
+    decfsz counter,1
+    goto frank3
     bcf interrupt,2
     return
 

@@ -1,79 +1,87 @@
 MPLINK 4.43, Linker
-Linker Map File - Created Fri Nov 06 16:12:46 2015
+Linker Map File - Created Thu Nov 26 20:07:28 2015
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
-                   .org_0       code   0x000000    program   0x000282
+                   .org_0       code   0x000000    program   0x0002a0
 
 
 
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x000140      
-            321 out of 1094 program addresses used, program memory utilization is 29%
+                            0x000000    0x00014f      
+            336 out of 1094 program addresses used, program memory utilization is 30%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-                bytecheck   0x0000bc    program     static C:\pic projects\onandoff\software\receiver.asm
-                  decrypt   0x000125    program     static C:\pic projects\onandoff\software\receiver.asm
-               decryptone   0x000139    program     static C:\pic projects\onandoff\software\receiver.asm
-              decryptzero   0x00013d    program     static C:\pic projects\onandoff\software\receiver.asm
-                    delay   0x000107    program     static C:\pic projects\onandoff\software\receiver.asm
-                   delay1   0x000111    program     static C:\pic projects\onandoff\software\receiver.asm
-                   delay3   0x00011b    program     static C:\pic projects\onandoff\software\receiver.asm
-                    frank   0x00010a    program     static C:\pic projects\onandoff\software\receiver.asm
-                   frank1   0x000114    program     static C:\pic projects\onandoff\software\receiver.asm
-                   frank2   0x00011e    program     static C:\pic projects\onandoff\software\receiver.asm
-                onandoff0   0x000075    program     static C:\pic projects\onandoff\software\receiver.asm
-                onandoff1   0x00007b    program     static C:\pic projects\onandoff\software\receiver.asm
-                onandoff2   0x000081    program     static C:\pic projects\onandoff\software\receiver.asm
-                onandoff3   0x000087    program     static C:\pic projects\onandoff\software\receiver.asm
-                      one   0x000102    program     static C:\pic projects\onandoff\software\receiver.asm
-                    oneth   0x0000ee    program     static C:\pic projects\onandoff\software\receiver.asm
-                   oneth1   0x0000f8    program     static C:\pic projects\onandoff\software\receiver.asm
-                operation   0x00008d    program     static C:\pic projects\onandoff\software\receiver.asm
-                 preamble   0x000021    program     static C:\pic projects\onandoff\software\receiver.asm
-                reception   0x000053    program     static C:\pic projects\onandoff\software\receiver.asm
-                    start   0x000019    program     static C:\pic projects\onandoff\software\receiver.asm
-                   switch   0x00005f    program     static C:\pic projects\onandoff\software\receiver.asm
-                     zero   0x0000fd    program     static C:\pic projects\onandoff\software\receiver.asm
-                   zeroth   0x0000e9    program     static C:\pic projects\onandoff\software\receiver.asm
-                  zeroth1   0x0000f3    program     static C:\pic projects\onandoff\software\receiver.asm
+                bytecheck   0x0000c1    program     static C:\pic projects\onandoff\software\receiver.asm
+                  decrypt   0x000134    program     static C:\pic projects\onandoff\software\receiver.asm
+               decryptone   0x000148    program     static C:\pic projects\onandoff\software\receiver.asm
+              decryptzero   0x00014c    program     static C:\pic projects\onandoff\software\receiver.asm
+                    delay   0x00010c    program     static C:\pic projects\onandoff\software\receiver.asm
+                   delay1   0x000116    program     static C:\pic projects\onandoff\software\receiver.asm
+                delay2sec   0x00012a    program     static C:\pic projects\onandoff\software\receiver.asm
+                   delay3   0x000120    program     static C:\pic projects\onandoff\software\receiver.asm
+                    frank   0x00010f    program     static C:\pic projects\onandoff\software\receiver.asm
+                   frank1   0x000119    program     static C:\pic projects\onandoff\software\receiver.asm
+                   frank2   0x000123    program     static C:\pic projects\onandoff\software\receiver.asm
+                   frank3   0x00012d    program     static C:\pic projects\onandoff\software\receiver.asm
+                onandoff0   0x00007a    program     static C:\pic projects\onandoff\software\receiver.asm
+                onandoff1   0x000080    program     static C:\pic projects\onandoff\software\receiver.asm
+                onandoff2   0x000086    program     static C:\pic projects\onandoff\software\receiver.asm
+                onandoff3   0x00008c    program     static C:\pic projects\onandoff\software\receiver.asm
+                      one   0x000107    program     static C:\pic projects\onandoff\software\receiver.asm
+                    oneth   0x0000f3    program     static C:\pic projects\onandoff\software\receiver.asm
+                   oneth1   0x0000fd    program     static C:\pic projects\onandoff\software\receiver.asm
+                operation   0x000092    program     static C:\pic projects\onandoff\software\receiver.asm
+                 preamble   0x000026    program     static C:\pic projects\onandoff\software\receiver.asm
+                 prestart   0x000019    program     static C:\pic projects\onandoff\software\receiver.asm
+                reception   0x000058    program     static C:\pic projects\onandoff\software\receiver.asm
+                    start   0x00001e    program     static C:\pic projects\onandoff\software\receiver.asm
+                   switch   0x000064    program     static C:\pic projects\onandoff\software\receiver.asm
+                    times   0x00001b    program     static C:\pic projects\onandoff\software\receiver.asm
+                     zero   0x000102    program     static C:\pic projects\onandoff\software\receiver.asm
+                   zeroth   0x0000ee    program     static C:\pic projects\onandoff\software\receiver.asm
+                  zeroth1   0x0000f8    program     static C:\pic projects\onandoff\software\receiver.asm
 
 
 
                               Symbols - Sorted by Address
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-                    start   0x000019    program     static C:\pic projects\onandoff\software\receiver.asm
-                 preamble   0x000021    program     static C:\pic projects\onandoff\software\receiver.asm
-                reception   0x000053    program     static C:\pic projects\onandoff\software\receiver.asm
-                   switch   0x00005f    program     static C:\pic projects\onandoff\software\receiver.asm
-                onandoff0   0x000075    program     static C:\pic projects\onandoff\software\receiver.asm
-                onandoff1   0x00007b    program     static C:\pic projects\onandoff\software\receiver.asm
-                onandoff2   0x000081    program     static C:\pic projects\onandoff\software\receiver.asm
-                onandoff3   0x000087    program     static C:\pic projects\onandoff\software\receiver.asm
-                operation   0x00008d    program     static C:\pic projects\onandoff\software\receiver.asm
-                bytecheck   0x0000bc    program     static C:\pic projects\onandoff\software\receiver.asm
-                   zeroth   0x0000e9    program     static C:\pic projects\onandoff\software\receiver.asm
-                    oneth   0x0000ee    program     static C:\pic projects\onandoff\software\receiver.asm
-                  zeroth1   0x0000f3    program     static C:\pic projects\onandoff\software\receiver.asm
-                   oneth1   0x0000f8    program     static C:\pic projects\onandoff\software\receiver.asm
-                     zero   0x0000fd    program     static C:\pic projects\onandoff\software\receiver.asm
-                      one   0x000102    program     static C:\pic projects\onandoff\software\receiver.asm
-                    delay   0x000107    program     static C:\pic projects\onandoff\software\receiver.asm
-                    frank   0x00010a    program     static C:\pic projects\onandoff\software\receiver.asm
-                   delay1   0x000111    program     static C:\pic projects\onandoff\software\receiver.asm
-                   frank1   0x000114    program     static C:\pic projects\onandoff\software\receiver.asm
-                   delay3   0x00011b    program     static C:\pic projects\onandoff\software\receiver.asm
-                   frank2   0x00011e    program     static C:\pic projects\onandoff\software\receiver.asm
-                  decrypt   0x000125    program     static C:\pic projects\onandoff\software\receiver.asm
-               decryptone   0x000139    program     static C:\pic projects\onandoff\software\receiver.asm
-              decryptzero   0x00013d    program     static C:\pic projects\onandoff\software\receiver.asm
+                 prestart   0x000019    program     static C:\pic projects\onandoff\software\receiver.asm
+                    times   0x00001b    program     static C:\pic projects\onandoff\software\receiver.asm
+                    start   0x00001e    program     static C:\pic projects\onandoff\software\receiver.asm
+                 preamble   0x000026    program     static C:\pic projects\onandoff\software\receiver.asm
+                reception   0x000058    program     static C:\pic projects\onandoff\software\receiver.asm
+                   switch   0x000064    program     static C:\pic projects\onandoff\software\receiver.asm
+                onandoff0   0x00007a    program     static C:\pic projects\onandoff\software\receiver.asm
+                onandoff1   0x000080    program     static C:\pic projects\onandoff\software\receiver.asm
+                onandoff2   0x000086    program     static C:\pic projects\onandoff\software\receiver.asm
+                onandoff3   0x00008c    program     static C:\pic projects\onandoff\software\receiver.asm
+                operation   0x000092    program     static C:\pic projects\onandoff\software\receiver.asm
+                bytecheck   0x0000c1    program     static C:\pic projects\onandoff\software\receiver.asm
+                   zeroth   0x0000ee    program     static C:\pic projects\onandoff\software\receiver.asm
+                    oneth   0x0000f3    program     static C:\pic projects\onandoff\software\receiver.asm
+                  zeroth1   0x0000f8    program     static C:\pic projects\onandoff\software\receiver.asm
+                   oneth1   0x0000fd    program     static C:\pic projects\onandoff\software\receiver.asm
+                     zero   0x000102    program     static C:\pic projects\onandoff\software\receiver.asm
+                      one   0x000107    program     static C:\pic projects\onandoff\software\receiver.asm
+                    delay   0x00010c    program     static C:\pic projects\onandoff\software\receiver.asm
+                    frank   0x00010f    program     static C:\pic projects\onandoff\software\receiver.asm
+                   delay1   0x000116    program     static C:\pic projects\onandoff\software\receiver.asm
+                   frank1   0x000119    program     static C:\pic projects\onandoff\software\receiver.asm
+                   delay3   0x000120    program     static C:\pic projects\onandoff\software\receiver.asm
+                   frank2   0x000123    program     static C:\pic projects\onandoff\software\receiver.asm
+                delay2sec   0x00012a    program     static C:\pic projects\onandoff\software\receiver.asm
+                   frank3   0x00012d    program     static C:\pic projects\onandoff\software\receiver.asm
+                  decrypt   0x000134    program     static C:\pic projects\onandoff\software\receiver.asm
+               decryptone   0x000148    program     static C:\pic projects\onandoff\software\receiver.asm
+              decryptzero   0x00014c    program     static C:\pic projects\onandoff\software\receiver.asm
 
 

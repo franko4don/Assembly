@@ -43,6 +43,7 @@ decode	;contains the decoded signal
 	movlw 00h
 	movwf pointer	;sets the pointer for look up table to zero
 	movwf encode	;sets the register with the encoded signal to zero
+	movlw b'00000001'
 	movwf portb
 	movlw b'00000000'	;initializes portb with zero
 	movwf pin0			;assigns bytes to pin0
@@ -56,6 +57,7 @@ decode	;contains the decoded signal
 	movwf decode		;initializes the decoding register with zeros
 
 start:
+	bsf portb,0
 	movlw 00h
 	movwf pointer	;initializes pointer register with zeros
 	movwf encode	;initializes encode register with zeros
@@ -113,13 +115,18 @@ operate:
 	btfsc work,0	;checks the zero bit to know if its clear
 	call one		;calls subroutine that handles one bits
 	comf encode,1	;complements the encoded bytes
+	call trigger
 	call preamble
 	call transmit	;calls subroutine that handles the transmission
 	call checksum
 	return
 
+trigger:
+	bcf portb,0
+	return
+
 preamble:
-	bsf portb,0
+;	bsf portb,0
 	call delay1
 	bsf portb,0
 	call delay

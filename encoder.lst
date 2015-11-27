@@ -1,4 +1,4 @@
-MPASM  5.46                       ENCODER.ASM   11-6-2015  16:17:23         PAGE  1
+MPASM  5.46                       ENCODER.ASM   11-27-2015  17:22:53         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -49,294 +49,301 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000E   3000           00043         movlw 00h
 000F   00AB           00044         movwf pointer   ;sets the pointer for look up table to zero
 0010   00A9           00045         movwf encode    ;sets the register with the encoded signal to zero
-0011   0086           00046         movwf portb
-0012   3000           00047         movlw b'00000000'       ;initializes portb with zero
-0013   00A7           00048         movwf pin0                      ;assigns bytes to pin0
-0014   3001           00049         movlw b'00000001'
-0015   00A0           00050         movwf pin1                      ;assigns bytes to pin1
-0016   3002           00051         movlw b'00000010'
-0017   00A1           00052         movwf pin2                      ;assigns bytes to pin2
-0018   3003           00053         movlw b'00000011'
-MPASM  5.46                       ENCODER.ASM   11-6-2015  16:17:23         PAGE  2
+0011   3001           00046         movlw b'00000001'
+0012   0086           00047         movwf portb
+0013   3000           00048         movlw b'00000000'       ;initializes portb with zero
+0014   00A7           00049         movwf pin0                      ;assigns bytes to pin0
+0015   3001           00050         movlw b'00000001'
+0016   00A0           00051         movwf pin1                      ;assigns bytes to pin1
+0017   3002           00052         movlw b'00000010'
+0018   00A1           00053         movwf pin2                      ;assigns bytes to pin2
+MPASM  5.46                       ENCODER.ASM   11-27-2015  17:22:53         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0019   00A2           00054         movwf pin3                      ;assigns bytes to pin3
-001A   3000           00055         movlw 00h
-001B   00AD           00056         movwf decode            ;initializes the decoding register with zeros
-                      00057 
-001C                  00058 start:
-001C   3000           00059         movlw 00h
-001D   00AB           00060         movwf pointer   ;initializes pointer register with zeros
-001E   00A9           00061         movwf encode    ;initializes encode register with zeros
-001F   00AD           00062         movwf decode    ;initializes decode register with zeros
-0020   1805           00063         btfsc porta,0
-0021   2029           00064         call pin0encode ;calls the subroutine if the input pin goes high
-0022   1885           00065         btfsc porta,1
-0023   202D           00066         call pin1encode ;calls the subroutine if the input pin goes high
-0024   1905           00067         btfsc porta,2
-0025   2031           00068         call pin2encode ;calls the subroutine if the input pin goes high
-0026   1985           00069         btfsc porta,3
-0027   2035           00070         call pin3encode ;calls the subroutine if the input pin goes high
-0028   281C           00071         goto start              ;goes back to start
-                      00072 
-0029                  00073 pin0encode:
-0029   0827           00074         movf pin0,0     ;moves content of pin0 into the working register
-002A   00A8           00075         movwf work      ;copies content of pin0 into temp register, work
-002B   2039           00076         call operate    ;calls the subroutine that checks the bits
-002C   0008           00077         return
-                      00078 
-002D                  00079 pin1encode:
-002D   0820           00080         movf pin1,0     ;moves content of pin1 into the working register
-002E   00A8           00081         movwf work      ;copies content of pin1 into temp register, work
-002F   2039           00082         call operate    ;calls the subroutine that checks the bits
-0030   0008           00083         return
-                      00084 
-0031                  00085 pin2encode:
-0031   0821           00086         movf pin2,0     ;moves content of pin2 into the working register
-0032   00A8           00087         movwf work      ;copies content of pin2 into temp register, work
-0033   2039           00088         call operate    ;calls the subroutine that checks the bits
-0034   0008           00089         return
-                      00090 
-0035                  00091 pin3encode:
-0035   0822           00092         movf pin3,0     ;moves content of pin3 into the working register
-0036   00A8           00093         movwf work      ;copies content of pin3 into temp register, work
-0037   2039           00094         call operate    ;calls the subroutine that checks the bits
-0038   0008           00095         return
-                      00096 
-0039                  00097 operate:
-                      00098         ;performs a bit check on the nibbles
-0039   1DA8           00099         btfss work,3    ;checks the 3rd bit to know if its set
-003A   20A7           00100         call zero               ;calls subroutine that handles zero bits
-003B   19A8           00101         btfsc work,3    ;checks the 3rd bit to know if its clear
-003C   20A0           00102         call one                ;calls subroutine that handles one bits
-003D   1D28           00103         btfss work,2    ;checks the 2nd bit to know if its set
-003E   20A7           00104         call zero               ;calls subroutine that handles zero bits
-003F   1928           00105         btfsc work,2    ;checks the 2nd bit to know if its clear
-0040   20A0           00106         call one                ;calls subroutine that handles one bits
-MPASM  5.46                       ENCODER.ASM   11-6-2015  16:17:23         PAGE  3
+0019   3003           00054         movlw b'00000011'
+001A   00A2           00055         movwf pin3                      ;assigns bytes to pin3
+001B   3000           00056         movlw 00h
+001C   00AD           00057         movwf decode            ;initializes the decoding register with zeros
+                      00058 
+001D                  00059 start:
+001D   1406           00060         bsf portb,0
+001E   3000           00061         movlw 00h
+001F   00AB           00062         movwf pointer   ;initializes pointer register with zeros
+0020   00A9           00063         movwf encode    ;initializes encode register with zeros
+0021   00AD           00064         movwf decode    ;initializes decode register with zeros
+0022   1805           00065         btfsc porta,0
+0023   202B           00066         call pin0encode ;calls the subroutine if the input pin goes high
+0024   1885           00067         btfsc porta,1
+0025   202F           00068         call pin1encode ;calls the subroutine if the input pin goes high
+0026   1905           00069         btfsc porta,2
+0027   2033           00070         call pin2encode ;calls the subroutine if the input pin goes high
+0028   1985           00071         btfsc porta,3
+0029   2037           00072         call pin3encode ;calls the subroutine if the input pin goes high
+002A   281D           00073         goto start              ;goes back to start
+                      00074 
+002B                  00075 pin0encode:
+002B   0827           00076         movf pin0,0     ;moves content of pin0 into the working register
+002C   00A8           00077         movwf work      ;copies content of pin0 into temp register, work
+002D   203B           00078         call operate    ;calls the subroutine that checks the bits
+002E   0008           00079         return
+                      00080 
+002F                  00081 pin1encode:
+002F   0820           00082         movf pin1,0     ;moves content of pin1 into the working register
+0030   00A8           00083         movwf work      ;copies content of pin1 into temp register, work
+0031   203B           00084         call operate    ;calls the subroutine that checks the bits
+0032   0008           00085         return
+                      00086 
+0033                  00087 pin2encode:
+0033   0821           00088         movf pin2,0     ;moves content of pin2 into the working register
+0034   00A8           00089         movwf work      ;copies content of pin2 into temp register, work
+0035   203B           00090         call operate    ;calls the subroutine that checks the bits
+0036   0008           00091         return
+                      00092 
+0037                  00093 pin3encode:
+0037   0822           00094         movf pin3,0     ;moves content of pin3 into the working register
+0038   00A8           00095         movwf work      ;copies content of pin3 into temp register, work
+0039   203B           00096         call operate    ;calls the subroutine that checks the bits
+003A   0008           00097         return
+                      00098 
+003B                  00099 operate:
+                      00100         ;performs a bit check on the nibbles
+003B   1DA8           00101         btfss work,3    ;checks the 3rd bit to know if its set
+003C   20AB           00102         call zero               ;calls subroutine that handles zero bits
+003D   19A8           00103         btfsc work,3    ;checks the 3rd bit to know if its clear
+003E   20A4           00104         call one                ;calls subroutine that handles one bits
+003F   1D28           00105         btfss work,2    ;checks the 2nd bit to know if its set
+0040   20AB           00106         call zero               ;calls subroutine that handles zero bits
+MPASM  5.46                       ENCODER.ASM   11-27-2015  17:22:53         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0041   1CA8           00107         btfss work,1    ;checks the ist bit to know if its set
-0042   20A7           00108         call zero               ;calls subroutine that handles zero bits
-0043   18A8           00109         btfsc work,1    ;checks the ist bit to know if its clear
-0044   20A0           00110         call one                ;calls subroutine that handles one bits
-0045   1C28           00111         btfss work,0    ;checks the zero bit to know if its set
-0046   20A7           00112         call zero               ;calls subroutine that handles zero bits
-0047   1828           00113         btfsc work,0    ;checks the zero bit to know if its clear
-0048   20A0           00114         call one                ;calls subroutine that handles one bits
-0049   09A9           00115         comf encode,1   ;complements the encoded bytes
-004A   204E           00116         call preamble
-004B   2062           00117         call transmit   ;calls subroutine that handles the transmission
-004C   2087           00118         call checksum
-004D   0008           00119         return
-                      00120 
-004E                  00121 preamble:
-004E   1406           00122         bsf portb,0
-004F   20D4           00123         call delay1
-0050   1406           00124         bsf portb,0
-0051   20CA           00125         call delay
-0052   1006           00126         bcf portb,0
-0053   20CA           00127         call delay
-0054   1406           00128         bsf portb,0
-0055   20CA           00129         call delay
-0056   1006           00130         bcf portb,0
-0057   20CA           00131         call delay
-0058   1406           00132         bsf portb,0
-0059   20CA           00133         call delay
-005A   1006           00134         bcf portb,0
-005B   20CA           00135         call delay
-005C   1406           00136         bsf portb,0
-005D   20CA           00137         call delay
-005E   1006           00138         bcf portb,0
-005F   20CA           00139         call delay
-0060   20D4           00140         call delay1
-0061   0008           00141         return
-                      00142 
-0062                  00143 transmit:
-0062   1406           00144         bsf portb,0             ;sets the transmission pin
-                      00145 ;the rest of the code in this subroutine checks the bits in the encode register and calls up the appropr
+0041   1928           00107         btfsc work,2    ;checks the 2nd bit to know if its clear
+0042   20A4           00108         call one                ;calls subroutine that handles one bits
+0043   1CA8           00109         btfss work,1    ;checks the ist bit to know if its set
+0044   20AB           00110         call zero               ;calls subroutine that handles zero bits
+0045   18A8           00111         btfsc work,1    ;checks the ist bit to know if its clear
+0046   20A4           00112         call one                ;calls subroutine that handles one bits
+0047   1C28           00113         btfss work,0    ;checks the zero bit to know if its set
+0048   20AB           00114         call zero               ;calls subroutine that handles zero bits
+0049   1828           00115         btfsc work,0    ;checks the zero bit to know if its clear
+004A   20A4           00116         call one                ;calls subroutine that handles one bits
+004B   09A9           00117         comf encode,1   ;complements the encoded bytes
+004C   2051           00118         call trigger
+004D   2053           00119         call preamble
+004E   2066           00120         call transmit   ;calls subroutine that handles the transmission
+004F   208B           00121         call checksum
+0050   0008           00122         return
+                      00123 
+0051                  00124 trigger:
+0051   1006           00125         bcf portb,0
+0052   0008           00126         return
+                      00127 
+0053                  00128 preamble:
+                      00129 ;       bsf portb,0
+0053   20D8           00130         call delay1
+0054   1406           00131         bsf portb,0
+0055   20CE           00132         call delay
+0056   1006           00133         bcf portb,0
+0057   20CE           00134         call delay
+0058   1406           00135         bsf portb,0
+0059   20CE           00136         call delay
+005A   1006           00137         bcf portb,0
+005B   20CE           00138         call delay
+005C   1406           00139         bsf portb,0
+005D   20CE           00140         call delay
+005E   1006           00141         bcf portb,0
+005F   20CE           00142         call delay
+0060   1406           00143         bsf portb,0
+0061   20CE           00144         call delay
+0062   1006           00145         bcf portb,0
+0063   20CE           00146         call delay
+0064   20D8           00147         call delay1
+0065   0008           00148         return
+                      00149 
+0066                  00150 transmit:
+0066   1406           00151         bsf portb,0             ;sets the transmission pin
+                      00152 ;the rest of the code in this subroutine checks the bits in the encode register and calls up the appropr
                             iate subroutine
-0063   20D4           00146         call delay1
-0064   1C29           00147         btfss encode,0
-0065   209A           00148         call setb00
-0066   1829           00149         btfsc encode,0
-0067   209D           00150         call setb01
-0068   1CA9           00151         btfss encode,1
-0069   209A           00152         call setb00
-006A   18A9           00153         btfsc encode,1
-006B   209D           00154         call setb01
-006C   1D29           00155         btfss encode,2
-006D   209A           00156         call setb00
-006E   1929           00157         btfsc encode,2
-006F   209D           00158         call setb01
-MPASM  5.46                       ENCODER.ASM   11-6-2015  16:17:23         PAGE  4
+0067   20D8           00153         call delay1
+0068   1C29           00154         btfss encode,0
+0069   209E           00155         call setb00
+006A   1829           00156         btfsc encode,0
+006B   20A1           00157         call setb01
+006C   1CA9           00158         btfss encode,1
+MPASM  5.46                       ENCODER.ASM   11-27-2015  17:22:53         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0070   1DA9           00159         btfss encode,3
-0071   209A           00160         call setb00
-0072   19A9           00161         btfsc encode,3
-0073   209D           00162         call setb01
-0074   1E29           00163         btfss encode,4
-0075   209A           00164         call setb00
-0076   1A29           00165         btfsc encode,4
-0077   209D           00166         call setb01
-0078   1EA9           00167         btfss encode,5
-0079   209A           00168         call setb00
-007A   1AA9           00169         btfsc encode,5
-007B   209D           00170         call setb01
-007C   1F29           00171         btfss encode,6
-007D   209A           00172         call setb00
-007E   1B29           00173         btfsc encode,6
-007F   209D           00174         call setb01
-0080   1FA9           00175         btfss encode,7
-0081   209A           00176         call setb00
-0082   1BA9           00177         btfsc encode,7
-0083   209D           00178         call setb01
-0084   1006           00179         bcf portb,0
-0085   20CA           00180         call delay
-0086   0008           00181         return
-                      00182 
-0087                  00183 checksum:       ;this subrouting sends a checkbyte to the receiver to enable it know which signal to pro
+006D   209E           00159         call setb00
+006E   18A9           00160         btfsc encode,1
+006F   20A1           00161         call setb01
+0070   1D29           00162         btfss encode,2
+0071   209E           00163         call setb00
+0072   1929           00164         btfsc encode,2
+0073   20A1           00165         call setb01
+0074   1DA9           00166         btfss encode,3
+0075   209E           00167         call setb00
+0076   19A9           00168         btfsc encode,3
+0077   20A1           00169         call setb01
+0078   1E29           00170         btfss encode,4
+0079   209E           00171         call setb00
+007A   1A29           00172         btfsc encode,4
+007B   20A1           00173         call setb01
+007C   1EA9           00174         btfss encode,5
+007D   209E           00175         call setb00
+007E   1AA9           00176         btfsc encode,5
+007F   20A1           00177         call setb01
+0080   1F29           00178         btfss encode,6
+0081   209E           00179         call setb00
+0082   1B29           00180         btfsc encode,6
+0083   20A1           00181         call setb01
+0084   1FA9           00182         btfss encode,7
+0085   209E           00183         call setb00
+0086   1BA9           00184         btfsc encode,7
+0087   20A1           00185         call setb01
+0088   1006           00186         bcf portb,0
+0089   20CE           00187         call delay
+008A   0008           00188         return
+                      00189 
+008B                  00190 checksum:       ;this subrouting sends a checkbyte to the receiver to enable it know which signal to pro
                             cess
-0087   20D4           00184         call delay1
-0088   1406           00185         bsf portb,0
-0089   20CA           00186         call delay
-008A   1006           00187         bcf portb,0
-008B   20CA           00188         call delay
-008C   1406           00189         bsf portb,0
-008D   20CA           00190         call delay
-008E   1006           00191         bcf portb,0
-008F   20CA           00192         call delay
-0090   1406           00193         bsf portb,0
-0091   20CA           00194         call delay
-0092   1006           00195         bcf portb,0
-0093   20CA           00196         call delay
-0094   1406           00197         bsf portb,0
-0095   20CA           00198         call delay
-0096   1006           00199         bcf portb,0
-0097   20CA           00200         call delay
-0098   20D4           00201         call delay1
-0099   0008           00202         return
-                      00203 
-009A                  00204 setb00:
-009A   1006           00205         bcf     portb,0         ;clears pin0 in port b
-009B   20CA           00206         call delay              ;calls a delay subroutine
-009C   0008           00207         return
-                      00208 
-009D                  00209 setb01:
-009D   1406           00210         bsf     portb,0         ;sets pin0 in port b
-MPASM  5.46                       ENCODER.ASM   11-6-2015  16:17:23         PAGE  5
+008B   20D8           00191         call delay1
+008C   1406           00192         bsf portb,0
+008D   20CE           00193         call delay
+008E   1006           00194         bcf portb,0
+008F   20CE           00195         call delay
+0090   1406           00196         bsf portb,0
+0091   20CE           00197         call delay
+0092   1006           00198         bcf portb,0
+0093   20CE           00199         call delay
+0094   1406           00200         bsf portb,0
+0095   20CE           00201         call delay
+0096   1006           00202         bcf portb,0
+0097   20CE           00203         call delay
+0098   1406           00204         bsf portb,0
+0099   20CE           00205         call delay
+009A   1006           00206         bcf portb,0
+009B   20CE           00207         call delay
+009C   20D8           00208         call delay1
+009D   0008           00209         return
+                      00210 
+MPASM  5.46                       ENCODER.ASM   11-27-2015  17:22:53         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-009E   20CA           00211         call delay              ;calls a delay subroutine
-009F   0008           00212         return
-                      00213 
-                      00214 
+009E                  00211 setb00:
+009E   1006           00212         bcf     portb,0         ;clears pin0 in port b
+009F   20CE           00213         call delay              ;calls a delay subroutine
+00A0   0008           00214         return
                       00215 
-00A0                  00216 one:                                    ;carries out encoding for bits that are 1
-00A0   3080           00217         movlw b'10000000'       ;moves the value into the working register
-00A1   06A9           00218         xorwf encode,1          ;xors the value of gthe working register with that of the encode registe
+00A1                  00216 setb01:
+00A1   1406           00217         bsf     portb,0         ;sets pin0 in port b
+00A2   20CE           00218         call delay              ;calls a delay subroutine
+00A3   0008           00219         return
+                      00220 
+                      00221 
+                      00222 
+00A4                  00223 one:                                    ;carries out encoding for bits that are 1
+00A4   3080           00224         movlw b'10000000'       ;moves the value into the working register
+00A5   06A9           00225         xorwf encode,1          ;xors the value of gthe working register with that of the encode registe
                             r and stores the value in encode
-00A2   0DA9           00219         rlf encode,1            ;rotates the bits to the left through carry
-00A3   3000           00220         movlw 00h                       ;moves the value into the working register
-00A4   06A9           00221         xorwf encode,1      ;xors the value of gthe working register with that of the encode register an
+00A6   0DA9           00226         rlf encode,1            ;rotates the bits to the left through carry
+00A7   3000           00227         movlw 00h                       ;moves the value into the working register
+00A8   06A9           00228         xorwf encode,1      ;xors the value of gthe working register with that of the encode register an
                             d stores the value in encode
-00A5   0DA9           00222         rlf encode,1            ;rotates the bits to the left through carry
-00A6   0008           00223         return
-                      00224 
-00A7                  00225 zero:                                   ;carries out encoding for bits that are 0
-00A7   3000           00226         movlw 00h                       ;moves the value into the working register
-00A8   06A9           00227         xorwf encode,1          ;xors the value of gthe working register with that of the encode registe
+00A9   0DA9           00229         rlf encode,1            ;rotates the bits to the left through carry
+00AA   0008           00230         return
+                      00231 
+00AB                  00232 zero:                                   ;carries out encoding for bits that are 0
+00AB   3000           00233         movlw 00h                       ;moves the value into the working register
+00AC   06A9           00234         xorwf encode,1          ;xors the value of gthe working register with that of the encode registe
                             r and stores the value in encode
-00A9   0DA9           00228         rlf encode,1            ;rotates the bits to the left through carry
-00AA   3001           00229         movlw b'00000001'       ;moves the value into the working register
-00AB   06A9           00230         xorwf encode,1          ;xors the value of gthe working register with that of the encode registe
+00AD   0DA9           00235         rlf encode,1            ;rotates the bits to the left through carry
+00AE   3001           00236         movlw b'00000001'       ;moves the value into the working register
+00AF   06A9           00237         xorwf encode,1          ;xors the value of gthe working register with that of the encode registe
                             r and stores the value in encode
-00AC   0DA9           00231         rlf encode,1            ;rotates the bits to the left through carry
-00AD   0008           00232         return
-                      00233 
-00AE                  00234 decrypt:                ;this subroutine checks the odd bits in th encode register and calls up the appr
+00B0   0DA9           00238         rlf encode,1            ;rotates the bits to the left through carry
+00B1   0008           00239         return
+                      00240 
+00B2                  00241 decrypt:                ;this subroutine checks the odd bits in th encode register and calls up the appr
                             opriate subroutine
-00AE   0829           00235         movf encode,0   ;moves the content of encode into the working register
-00AF   00A8           00236         movwf work
-00B0   1BA8           00237         btfsc work,7
-00B1   20C2           00238         call decryptone
-00B2   1FA8           00239         btfss work,7
-00B3   20C6           00240         call decryptzero
-00B4   1AA8           00241         btfsc work,5
-00B5   20C2           00242         call decryptone
-00B6   1EA8           00243         btfss work,5
-00B7   20C6           00244         call decryptzero
-00B8   19A8           00245         btfsc work,3
-00B9   20C2           00246         call decryptone
-00BA   1DA8           00247         btfss work,3
-00BB   20C6           00248         call decryptzero
-00BC   18A8           00249         btfsc work,1
-00BD   20C2           00250         call decryptone
-00BE   1CA8           00251         btfss work,1
-00BF   20C6           00252         call decryptzero
-00C0   0CAD           00253         rrf decode,1    ;rotates the bits right once to correct the effect from the decryption
-00C1   0008           00254         return
-                      00255 
-00C2                  00256 decryptone:
-00C2   3001           00257         movlw b'00000001'       ;moves value to the working register
-00C3   06AD           00258         xorwf decode,1          ;xors value in working register with decode and stores answer in decode
-MPASM  5.46                       ENCODER.ASM   11-6-2015  16:17:23         PAGE  6
+00B2   0829           00242         movf encode,0   ;moves the content of encode into the working register
+00B3   00A8           00243         movwf work
+00B4   1BA8           00244         btfsc work,7
+00B5   20C6           00245         call decryptone
+00B6   1FA8           00246         btfss work,7
+00B7   20CA           00247         call decryptzero
+00B8   1AA8           00248         btfsc work,5
+00B9   20C6           00249         call decryptone
+00BA   1EA8           00250         btfss work,5
+00BB   20CA           00251         call decryptzero
+00BC   19A8           00252         btfsc work,3
+00BD   20C6           00253         call decryptone
+00BE   1DA8           00254         btfss work,3
+00BF   20CA           00255         call decryptzero
+00C0   18A8           00256         btfsc work,1
+00C1   20C6           00257         call decryptone
+00C2   1CA8           00258         btfss work,1
+MPASM  5.46                       ENCODER.ASM   11-27-2015  17:22:53         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00C4   0DAD           00259         rlf decode,1            ;rotates left through carry
-00C5   0008           00260         return
-                      00261 
-00C6                  00262 decryptzero:
-00C6   3000           00263         movlw b'00000000'       ;moves value to the working register
-00C7   06AD           00264         xorwf decode,1          ;xors value in working register with decode and stores answer in decode
-00C8   0DAD           00265         rlf decode,1            ;rotates left through carry
-00C9   0008           00266         return
-                      00267 ;the delay routine
-00CA                  00268 delay:
-00CA   0181           00269         clrf tmr0
-00CB   3008           00270         movlw d'8'
-00CC   00AC           00271     movwf counter       ;moves value in working register to counter
-00CD                  00272 frank:
-00CD   1D0B           00273     btfss interrupt,2           ;checks the TMR0IF to know when its set
-00CE   28CD           00274     goto frank
-00CF   110B           00275     bcf interrupt,2     ;clears the TMR0IF
-00D0   0BAC           00276     decfsz counter,1    ;decrements the value in the counter and puts the decremented value in the count
+00C3   20CA           00259         call decryptzero
+00C4   0CAD           00260         rrf decode,1    ;rotates the bits right once to correct the effect from the decryption
+00C5   0008           00261         return
+                      00262 
+00C6                  00263 decryptone:
+00C6   3001           00264         movlw b'00000001'       ;moves value to the working register
+00C7   06AD           00265         xorwf decode,1          ;xors value in working register with decode and stores answer in decode
+00C8   0DAD           00266         rlf decode,1            ;rotates left through carry
+00C9   0008           00267         return
+                      00268 
+00CA                  00269 decryptzero:
+00CA   3000           00270         movlw b'00000000'       ;moves value to the working register
+00CB   06AD           00271         xorwf decode,1          ;xors value in working register with decode and stores answer in decode
+00CC   0DAD           00272         rlf decode,1            ;rotates left through carry
+00CD   0008           00273         return
+                      00274 ;the delay routine
+00CE                  00275 delay:
+00CE   0181           00276         clrf tmr0
+00CF   3008           00277         movlw d'8'
+00D0   00AC           00278     movwf counter       ;moves value in working register to counter
+00D1                  00279 frank:
+00D1   1D0B           00280     btfss interrupt,2           ;checks the TMR0IF to know when its set
+00D2   28D1           00281     goto frank
+00D3   110B           00282     bcf interrupt,2     ;clears the TMR0IF
+00D4   0BAC           00283     decfsz counter,1    ;decrements the value in the counter and puts the decremented value in the count
                             er
-00D1   28CD           00277     goto frank
-00D2   110B           00278     bcf interrupt,2             ;clears the TMR0IF
-00D3   0008           00279     return
-                      00280 
-00D4                  00281 delay1:
-00D4   0181           00282         clrf tmr0
-00D5   302F           00283         movlw d'47'
-00D6   00AC           00284     movwf counter       ;moves value in working register to counter
-00D7                  00285 frank1:
-00D7   1D0B           00286     btfss interrupt,2           ;checks the TMR0IF to know when its set
-00D8   28D7           00287     goto frank1
-00D9   110B           00288     bcf interrupt,2     ;clears the TMR0IF
-00DA   0BAC           00289     decfsz counter,1    ;decrements the value in the counter and puts the decremented value in the count
+00D5   28D1           00284     goto frank
+00D6   110B           00285     bcf interrupt,2             ;clears the TMR0IF
+00D7   0008           00286     return
+                      00287 
+00D8                  00288 delay1:
+00D8   0181           00289         clrf tmr0
+00D9   302F           00290         movlw d'47'
+00DA   00AC           00291     movwf counter       ;moves value in working register to counter
+00DB                  00292 frank1:
+00DB   1D0B           00293     btfss interrupt,2           ;checks the TMR0IF to know when its set
+00DC   28DB           00294     goto frank1
+00DD   110B           00295     bcf interrupt,2     ;clears the TMR0IF
+00DE   0BAC           00296     decfsz counter,1    ;decrements the value in the counter and puts the decremented value in the count
                             er
-00DB   28D7           00290     goto frank1
-00DC   110B           00291     bcf interrupt,2             ;clears the TMR0IF
-00DD   0008           00292     return
-                      00293         end
-MPASM  5.46                       ENCODER.ASM   11-6-2015  16:17:23         PAGE  7
+00DF   28DB           00297     goto frank1
+00E0   110B           00298     bcf interrupt,2             ;clears the TMR0IF
+00E1   0008           00299     return
+                      00300         end
+MPASM  5.46                       ENCODER.ASM   11-27-2015  17:22:53         PAGE  7
 
 
 SYMBOL TABLE
@@ -346,30 +353,30 @@ CMCON                             0000001F
 __16F84A                          00000001
 __DEBUG                           1
 bitposition                       0000002A
-checksum                          00000087
+checksum                          0000008B
 counter                           0000002C
 decode                            0000002D
-decrypt                           000000AE
-decryptone                        000000C2
-decryptzero                       000000C6
-delay                             000000CA
-delay1                            000000D4
+decrypt                           000000B2
+decryptone                        000000C6
+decryptzero                       000000CA
+delay                             000000CE
+delay1                            000000D8
 encode                            00000029
-frank                             000000CD
-frank1                            000000D7
+frank                             000000D1
+frank1                            000000DB
 interrupt                         0000000B
-one                               000000A0
-operate                           00000039
+one                               000000A4
+operate                           0000003B
 optionreg                         00000001
 pcl                               00000002
 pin0                              00000027
-pin0encode                        00000029
+pin0encode                        0000002B
 pin1                              00000020
-pin1encode                        0000002D
+pin1encode                        0000002F
 pin2                              00000021
-pin2encode                        00000031
+pin2encode                        00000033
 pin3                              00000022
-pin3encode                        00000035
+pin3encode                        00000037
 pin4                              00000023
 pin5                              00000024
 pin6                              00000025
@@ -377,16 +384,17 @@ pin7                              00000026
 pointer                           0000002B
 porta                             00000005
 portb                             00000006
-preamble                          0000004E
-setb00                            0000009A
-setb01                            0000009D
-start                             0000001C
+preamble                          00000053
+setb00                            0000009E
+setb01                            000000A1
+start                             0000001D
 status                            00000003
 tmr0                              00000001
-transmit                          00000062
+transmit                          00000066
+trigger                           00000051
 work                              00000028
-zero                              000000A7
-MPASM  5.46                       ENCODER.ASM   11-6-2015  16:17:23         PAGE  8
+zero                              000000AB
+MPASM  5.46                       ENCODER.ASM   11-27-2015  17:22:53         PAGE  8
 
 
 MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
@@ -395,12 +403,12 @@ MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
 0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
 0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
 0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
-00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXX-- ---------------- ----------------
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XX-------------- ----------------
 
 All other memory blocks unused.
 
-Program Memory Words Used:   222
-Program Memory Words Free:   802
+Program Memory Words Used:   226
+Program Memory Words Free:   798
 
 
 Errors   :     0
